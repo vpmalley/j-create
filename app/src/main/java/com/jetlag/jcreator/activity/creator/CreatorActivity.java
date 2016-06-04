@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
@@ -21,6 +19,9 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.jetlag.jcreator.R;
+import com.jetlag.jcreator.pictures.Picture;
+
+import java.util.List;
 
 public class CreatorActivity extends AppCompatActivity {
 
@@ -35,7 +36,7 @@ public class CreatorActivity extends AppCompatActivity {
    * may be best to switch to a
    * {@link android.support.v4.app.FragmentStatePagerAdapter}.
    */
-  private SectionsPagerAdapter mSectionsPagerAdapter;
+  private CreatorPagerAdapter mCreatorPagerAdapter;
 
   /**
    * The {@link ViewPager} that will host the section contents.
@@ -51,13 +52,12 @@ public class CreatorActivity extends AppCompatActivity {
     setSupportActionBar(toolbar);
     // Create the adapter that will return a fragment for each of the three
     // primary sections of the activity.
-    mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+    mCreatorPagerAdapter = new CreatorPagerAdapter(getSupportFragmentManager());
 
     // Set up the ViewPager with the sections adapter.
     mViewPager = (ViewPager) findViewById(R.id.container);
-    mViewPager.setAdapter(mSectionsPagerAdapter);
+    mViewPager.setAdapter(mCreatorPagerAdapter);
     checkPermission(PERM_READ_PICS, REQ_READ_PICS);
-
 
     FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
     fab.setOnClickListener(new View.OnClickListener() {
@@ -134,40 +134,10 @@ public class CreatorActivity extends AppCompatActivity {
     }
   }
 
-  /**
-   * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-   * one of the sections/tabs/pages.
-   */
-  public class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-    public SectionsPagerAdapter(FragmentManager fm) {
-      super(fm);
-    }
-
-    @Override
-    public Fragment getItem(int position) {
-      // getItem is called to instantiate the fragment for the given page.
-      // Return a PlaceholderFragment (defined as a static inner class below).
-      return PicturePickerFragment.newInstance(position + 1);
-    }
-
-    @Override
-    public int getCount() {
-      // Show 3 total pages.
-      return 3;
-    }
-
-    @Override
-    public CharSequence getPageTitle(int position) {
-      switch (position) {
-        case 0:
-          return "SECTION 1";
-        case 1:
-          return "SECTION 2";
-        case 2:
-          return "SECTION 3";
-      }
-      return null;
-    }
+  public void pickPicturesAndGoToTextWriter(List<Picture> picked) {
+    TextWriterFragment textWriterFragment = (TextWriterFragment) mCreatorPagerAdapter.getItem(1);
+    textWriterFragment.setPickedPictures(picked);
+    mViewPager.setCurrentItem(1);
   }
+
 }
