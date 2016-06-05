@@ -14,10 +14,9 @@ import com.jetlag.jcreator.pictures.Picture;
 import com.jetlag.jcreator.pictures.PictureFromGalleryLoader;
 import com.jetlag.jcreator.pictures.PictureLoadedListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class PicturePickerFragment extends Fragment implements PictureLoadedListener {
+public class PicturePickerFragment extends Fragment {
   /**
    * The fragment argument representing the section number for this
    * fragment.
@@ -26,7 +25,6 @@ public class PicturePickerFragment extends Fragment implements PictureLoadedList
   private RecyclerView picturesView;
   private Button nextButton;
   private PictureFromGalleryLoader picLoader;
-  private List<Picture> pictures;
 
   public PicturePickerFragment() {
   }
@@ -48,20 +46,15 @@ public class PicturePickerFragment extends Fragment implements PictureLoadedList
                            Bundle savedInstanceState) {
     View rootView = inflater.inflate(R.layout.fragment_creator_picture, container, false);
     findViews(rootView);
-    picLoader = new PictureFromGalleryLoader(getContext(), this);
+    displayPictures();
+    picLoader = new PictureFromGalleryLoader(getContext(), (PictureLoadedListener) getActivity());
     if (((CreatorActivity) getActivity()).checkPermission(CreatorActivity.PERM_READ_PICS, CreatorActivity.REQ_READ_PICS)) {
       picLoader.getLatestPics();
     }
     nextButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        List<Picture> pickedPictures = new ArrayList<Picture>();
-        for (Picture p : PicturePickerFragment.this.pictures) {
-          if (p.isPicked()) {
-            pickedPictures.add(p);
-          }
-        }
-        ((CreatorActivity) getActivity()).pickPicturesAndGoToTextWriter(pickedPictures);
+        onClickNextButton();
       }
     });
     return rootView;
@@ -72,12 +65,18 @@ public class PicturePickerFragment extends Fragment implements PictureLoadedList
     nextButton = (Button) rootView.findViewById(R.id.next);
   }
 
-  @Override
-  public void onPicturesWithLocationLoaded(List<Picture> pictures) {
-    this.pictures = pictures;
+  public void displayPictures() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-    picturesView.setAdapter(new PictureAdapter(getActivity(), R.layout.picture_thumbnail_cell, pictures));
+    List<Picture> selectablePictures = ((CreatorActivity) getActivity()).getPresenter().getSelectablePictures();
+    picturesView.setAdapter(new PictureAdapter(getActivity(), R.layout.picture_thumbnail_cell, selectablePictures));
     picturesView.setLayoutManager(layoutManager);
+  }
 
+  private void onClickNextButton() {
+    ((CreatorActivity) getActivity()).pickPicturesAndGoToTextWriter();
+  }
+
+  public void updateSelectablePictures() {
+    picturesView.getAdapter().notifyDataSetChanged();
   }
 }

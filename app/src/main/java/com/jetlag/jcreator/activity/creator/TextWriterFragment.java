@@ -27,7 +27,6 @@ public class TextWriterFragment extends Fragment {
   private RecyclerView picturesView;
   private EditText storyEditor;
   private Button nextButton;
-  private List<Picture> pictures;
 
   public TextWriterFragment() {
   }
@@ -59,16 +58,14 @@ public class TextWriterFragment extends Fragment {
     nextButton = (Button) rootView.findViewById(R.id.next);
   }
 
-  public void setPickedPictures(List<Picture> pickedPictures) {
-    this.pictures = pickedPictures;
-    displayPictures();
+  private void displayPictures() {
+    LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+    List<Picture> selectedPictures = ((CreatorActivity) getActivity()).getPresenter().getSelectedPictures();
+    picturesView.setAdapter(new PictureAdapter(getActivity(), R.layout.picture_thumbnail_cell, selectedPictures));
+    picturesView.setLayoutManager(layoutManager);
   }
 
-  private void displayPictures() {
-    if (picturesView != null) {
-      LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-      picturesView.setAdapter(new PictureAdapter(getActivity(), R.layout.picture_thumbnail_cell, pictures));
-      picturesView.setLayoutManager(layoutManager);
-    }
+  public void updatePickedPictures() {
+    picturesView.getAdapter().notifyDataSetChanged();
   }
 }

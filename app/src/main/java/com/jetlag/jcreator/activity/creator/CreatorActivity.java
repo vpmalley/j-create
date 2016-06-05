@@ -20,13 +20,16 @@ import android.widget.Toast;
 
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.pictures.Picture;
+import com.jetlag.jcreator.pictures.PictureLoadedListener;
 
 import java.util.List;
 
-public class CreatorActivity extends AppCompatActivity {
+public class CreatorActivity extends AppCompatActivity implements PictureLoadedListener {
 
   public static final int REQ_READ_PICS = 101;
   public static final String PERM_READ_PICS = Manifest.permission.READ_EXTERNAL_STORAGE;
+  private static final int PICTURE_FRAGMENT_POSITION = 0;
+  private static final int TEXT_FRAGMENT_POSITION = 1;
 
   /**
    * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -43,6 +46,8 @@ public class CreatorActivity extends AppCompatActivity {
    */
   private ViewPager mViewPager;
 
+  private CreatorPresenter creatorPresenter;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -53,6 +58,7 @@ public class CreatorActivity extends AppCompatActivity {
     // Create the adapter that will return a fragment for each of the three
     // primary sections of the activity.
     mCreatorPagerAdapter = new CreatorPagerAdapter(getSupportFragmentManager());
+    creatorPresenter = new CreatorPresenter();
 
     // Set up the ViewPager with the sections adapter.
     mViewPager = (ViewPager) findViewById(R.id.container);
@@ -134,10 +140,26 @@ public class CreatorActivity extends AppCompatActivity {
     }
   }
 
-  public void pickPicturesAndGoToTextWriter(List<Picture> picked) {
-    TextWriterFragment textWriterFragment = (TextWriterFragment) mCreatorPagerAdapter.getItem(1);
-    textWriterFragment.setPickedPictures(picked);
-    mViewPager.setCurrentItem(1);
+  public void pickPicturesAndGoToTextWriter() {
+    getPresenter().updateSelectedPictures();
+    mViewPager.setCurrentItem(TEXT_FRAGMENT_POSITION);
+    TextWriterFragment textWriterFragment = (TextWriterFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(TEXT_FRAGMENT_POSITION));
+    textWriterFragment.updatePickedPictures();
   }
 
+  public CreatorPresenter getPresenter() {
+    return creatorPresenter;
+  }
+
+  private String getFragmentTag(int position)
+  {
+    return "android:switcher:" + R.id.container + ":" + position;
+  }
+
+  @Override
+  public void onPicturesWithLocationLoaded(List<Picture> pictures) {
+    getPresenter().setSelectablePictures(pictures);
+    PicturePickerFragment picturePickerFragment = (PicturePickerFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(PICTURE_FRAGMENT_POSITION));
+    picturePickerFragment.updateSelectablePictures();
+  }
 }
