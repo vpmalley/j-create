@@ -10,8 +10,8 @@
         android:id="@+id/user_help"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_alignParentTop="true"
         android:text="Pick 1 to 3 pictures among these"/>
 
@@ -30,6 +30,7 @@
         android:layout_margin="10dp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:gravity="center"
         android:background="@android:color/holo_blue_dark"
         android:text="@string/next"
         android:textColor="@android:color/primary_text_dark"

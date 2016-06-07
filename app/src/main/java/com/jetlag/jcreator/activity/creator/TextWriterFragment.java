@@ -49,6 +49,7 @@ public class TextWriterFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_creator_text, container, false);
     findViews(rootView);
     displayPictures();
+    storyEditor.requestFocus();
     return rootView;
   }
 

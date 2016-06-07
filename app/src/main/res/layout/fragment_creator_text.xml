@@ -3,8 +3,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context=".activity.creator.PicturePickerFragment">
 
@@ -12,9 +10,9 @@
         android:id="@+id/user_help"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
         android:layout_alignParentTop="true"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:text="Based on these pictures you picked"/>
 
     <android.support.v7.widget.RecyclerView
@@ -24,22 +22,37 @@
         android:layout_below="@id/user_help"
         />
 
+    <TextView
+        android:id="@+id/user_help_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pictures"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Please describe your day ..."/>
+
     <EditText
         android:id="@+id/story"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/pictures"
-        android:layout_above="@id/next"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_help_1"
+        android:inputType="textMultiLine"
+        android:hint="What did you discover today? What food did you try?"
         />
 
     <Button
         android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="50dp"
+        android:layout_below="@id/story"
         android:layout_margin="10dp"
+        android:gravity="center"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:background="@android:color/holo_blue_dark"
         android:text="@string/next"
         android:textColor="@android:color/primary_text_dark"

@@ -13,8 +13,6 @@ public class CreatorPresenter {
   private List<Picture> selectablePictures;
   private List<Picture> selectedPictures;
 
-  CreatorActivity activity;
-
   public CreatorPresenter() {
     selectablePictures = new ArrayList<>();
     selectedPictures = new ArrayList<>();
