@@ -19,6 +19,8 @@ public class CreatorPagerAdapter extends FragmentPagerAdapter {
     switch (position) {
       case 1:
         return TextWriterFragment.newInstance(position + 1);
+      case 2:
+        return ArticlePreviewFragment.newInstance(position + 1);
       case 0:
       default:
         return PicturePickerFragment.newInstance(position + 1);
@@ -38,7 +40,7 @@ public class CreatorPagerAdapter extends FragmentPagerAdapter {
       case 1:
         return "Write your experience";
       case 2:
-        return "Publish";
+        return "Preview";
     }
     return null;
   }

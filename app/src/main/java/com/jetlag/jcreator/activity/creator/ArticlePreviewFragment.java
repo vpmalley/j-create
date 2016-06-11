@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.pictures.Picture;
@@ -18,25 +18,25 @@ import java.util.List;
 /**
  * Created by vince on 04/06/16.
  */
-public class TextWriterFragment extends Fragment {
+public class ArticlePreviewFragment extends Fragment {
   /**
    * The fragment argument representing the section number for this
    * fragment.
    */
   private static final String ARG_SECTION_NUMBER = "section_number";
   private RecyclerView picturesView;
-  private EditText storyEditor;
-  private Button nextButton;
+  private TextView storyView;
+  private Button nextStoryButton;
 
-  public TextWriterFragment() {
+  public ArticlePreviewFragment() {
   }
 
   /**
    * Returns a new instance of this fragment for the given section
    * number.
    */
-  public static TextWriterFragment newInstance(int sectionNumber) {
-    TextWriterFragment fragment = new TextWriterFragment();
+  public static ArticlePreviewFragment newInstance(int sectionNumber) {
+    ArticlePreviewFragment fragment = new ArticlePreviewFragment();
     Bundle args = new Bundle();
     args.putInt(ARG_SECTION_NUMBER, sectionNumber);
     fragment.setArguments(args);
@@ -46,14 +46,14 @@ public class TextWriterFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
-    View rootView = inflater.inflate(R.layout.fragment_creator_text, container, false);
+    View rootView = inflater.inflate(R.layout.fragment_creator_preview, container, false);
     findViews(rootView);
     displayPictures();
-    storyEditor.requestFocus();
-    nextButton.setOnClickListener(new View.OnClickListener() {
+    displayStory();
+    nextStoryButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        onClickNextButton();
+        onClickNextStoryButton();
       }
     });
     return rootView;
@@ -61,8 +61,8 @@ public class TextWriterFragment extends Fragment {
 
   private void findViews(View rootView) {
     picturesView = (RecyclerView) rootView.findViewById(R.id.pictures);
-    storyEditor = (EditText) rootView.findViewById(R.id.story);
-    nextButton = (Button) rootView.findViewById(R.id.next);
+    storyView = (TextView) rootView.findViewById(R.id.story);
+    nextStoryButton = (Button) rootView.findViewById(R.id.nextStory);
   }
 
   private void displayPictures() {
@@ -72,12 +72,14 @@ public class TextWriterFragment extends Fragment {
     picturesView.setLayoutManager(layoutManager);
   }
 
-  private void onClickNextButton() {
-    String text = storyEditor.getText().toString();
-    ((CreatorActivity) getActivity()).writeTextAndGoToArticlePreview(text);
+  private void displayStory() {
+    storyView.setText(((CreatorActivity) getActivity()).getPresenter().getText());
   }
 
-  public void updatePickedPictures() {
+  private void onClickNextStoryButton() {
+  }
+
+  public void updatePictures() {
     picturesView.getAdapter().notifyDataSetChanged();
   }
 }

@@ -12,6 +12,7 @@ public class CreatorPresenter {
 
   private List<Picture> selectablePictures;
   private List<Picture> selectedPictures;
+  private String text;
 
   public CreatorPresenter() {
     selectablePictures = new ArrayList<>();
@@ -43,5 +44,13 @@ public class CreatorPresenter {
         selectedPictures.add(p);
       }
     }
+  }
+
+  public void setText(String text) {
+    this.text = text;
+  }
+
+  public String getText() {
+    return text;
   }
 }

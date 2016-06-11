@@ -27,6 +27,7 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
   public static final String PERM_READ_PICS = Manifest.permission.READ_EXTERNAL_STORAGE;
   private static final int PICTURE_FRAGMENT_POSITION = 0;
   private static final int TEXT_FRAGMENT_POSITION = 1;
+  private static final int PREVIEW_FRAGMENT_POSITION = 2;
 
   /**
    * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -148,5 +149,12 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
     getPresenter().setSelectablePictures(pictures);
     PicturePickerFragment picturePickerFragment = (PicturePickerFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(PICTURE_FRAGMENT_POSITION));
     picturePickerFragment.updateSelectablePictures();
+  }
+
+  public void writeTextAndGoToArticlePreview(String text) {
+    getPresenter().setText(text);
+    mViewPager.setCurrentItem(PREVIEW_FRAGMENT_POSITION);
+    ArticlePreviewFragment articlePreviewFragment = (ArticlePreviewFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(PREVIEW_FRAGMENT_POSITION));
+    articlePreviewFragment.updatePictures();
   }
 }
