@@ -1,6 +1,5 @@
 package com.jetlag.jcreator.pictures;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.provider.MediaStore;

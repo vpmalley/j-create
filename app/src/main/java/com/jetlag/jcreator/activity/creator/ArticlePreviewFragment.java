@@ -66,13 +66,13 @@ public class ArticlePreviewFragment extends Fragment {
 
   private void displayPictures() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-    List<Picture> selectedPictures = ((CreatorActivity) getActivity()).getPresenter().getSelectedPictures();
+    List<Picture> selectedPictures = ((CreatorActivity) getActivity()).getViewModel().getSelectedPictures();
     picturesView.setAdapter(new PictureAdapter(getActivity(), R.layout.picture_thumbnail_cell, selectedPictures));
     picturesView.setLayoutManager(layoutManager);
   }
 
   private void displayStory() {
-    storyView.setText(((CreatorActivity) getActivity()).getPresenter().getStoryText());
+    storyView.setText(((CreatorActivity) getActivity()).getViewModel().getStoryText());
   }
 
   private void onClickNextStoryButton() {

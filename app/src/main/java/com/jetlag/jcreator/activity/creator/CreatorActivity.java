@@ -19,7 +19,6 @@ import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.pictures.Picture;
 import com.jetlag.jcreator.pictures.PictureLoadedListener;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class CreatorActivity extends AppCompatActivity implements PictureLoadedListener {
@@ -45,7 +44,7 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
    */
   private ViewPager mViewPager;
 
-  private CreatorPresenter creatorPresenter;
+  private CreatorViewModel creatorViewModel;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +56,7 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
     // Create the adapter that will return a fragment for each of the three
     // primary sections of the activity.
     mCreatorPagerAdapter = new CreatorPagerAdapter(getSupportFragmentManager());
-    creatorPresenter = new CreatorPresenter();
+    creatorViewModel = new CreatorViewModel();
 
     // Set up the ViewPager with the sections adapter.
     mViewPager = (ViewPager) findViewById(R.id.container);
@@ -129,15 +128,8 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
     }
   }
 
-  public void pickPicturesAndGoToTextWriter() {
-    getPresenter().updateSelectedPictures();
-    mViewPager.setCurrentItem(TEXT_FRAGMENT_POSITION);
-    TextWriterFragment textWriterFragment = (TextWriterFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(TEXT_FRAGMENT_POSITION));
-    textWriterFragment.updateStory();
-  }
-
-  public CreatorPresenter getPresenter() {
-    return creatorPresenter;
+  public CreatorViewModel getViewModel() {
+    return creatorViewModel;
   }
 
   private String getFragmentTag(int position)
@@ -147,25 +139,39 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
 
   @Override
   public void onPicturesWithLocationLoaded(List<Picture> pictures) {
-    getPresenter().setSelectablePictures(pictures);
+    getViewModel().setSelectablePictures(pictures);
     PicturePickerFragment picturePickerFragment = (PicturePickerFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(PICTURE_FRAGMENT_POSITION));
     picturePickerFragment.updateSelectablePictures();
   }
 
+  public void pickPicturesAndGoToTextWriter() {
+    getViewModel().updateSelectedPictures();
+    moveToStoryWriter();
+  }
+
+  private void moveToStoryWriter() {
+    mViewPager.setCurrentItem(TEXT_FRAGMENT_POSITION);
+    TextWriterFragment textWriterFragment = (TextWriterFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(TEXT_FRAGMENT_POSITION));
+    textWriterFragment.updateStory();
+  }
+
   public void writeTextAndGoToArticlePreview(String text) {
-    getPresenter().setStoryText(text);
+    getViewModel().setStoryText(text);
+    moveToStoryPreview();
+  }
+
+  private void moveToStoryPreview() {
     mViewPager.setCurrentItem(PREVIEW_FRAGMENT_POSITION);
     ArticlePreviewFragment articlePreviewFragment = (ArticlePreviewFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(PREVIEW_FRAGMENT_POSITION));
     articlePreviewFragment.updateStory();
   }
 
   public void addStoryAndStartNewStory() {
-    Story story = new Story();
-    story.setPictures(new ArrayList<>(getPresenter().getSelectedPictures()));
-    story.setStoryText(getPresenter().getStoryText());
-    getPresenter().addStory(story);
-    getPresenter().setStoryText("");
-    getPresenter().getSelectedPictures().clear();
+    getViewModel().commitStory();
+    moveToPicturePicking();
+  }
+
+  private void moveToPicturePicking() {
     mViewPager.setCurrentItem(PICTURE_FRAGMENT_POSITION);
   }
 }

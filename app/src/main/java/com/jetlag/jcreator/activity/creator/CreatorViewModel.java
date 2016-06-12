@@ -1,6 +1,7 @@
 package com.jetlag.jcreator.activity.creator;
 
 import com.jetlag.jcreator.pictures.Picture;
+import com.jetlag.jcreator.stories.Story;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,14 +9,14 @@ import java.util.List;
 /**
  * Created by vince on 04/06/16.
  */
-public class CreatorPresenter {
+public class CreatorViewModel {
 
   private List<Picture> selectablePictures;
   private List<Picture> selectedPictures;
   private String storyText;
   private List<Story> stories;
 
-  public CreatorPresenter() {
+  public CreatorViewModel() {
     selectablePictures = new ArrayList<>();
     selectedPictures = new ArrayList<>();
     stories = new ArrayList<>();
@@ -62,5 +63,14 @@ public class CreatorPresenter {
 
   public void addStory(Story story) {
     this.stories.add(story);
+  }
+
+  public void commitStory() {
+    Story story = new Story();
+    story.setPictures(new ArrayList<>(getSelectedPictures()));
+    story.setStoryText(getStoryText());
+    addStory(story);
+    setStoryText("");
+    getSelectedPictures().clear();
   }
 }

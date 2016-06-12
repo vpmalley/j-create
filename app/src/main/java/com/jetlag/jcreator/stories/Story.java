@@ -1,4 +1,4 @@
-package com.jetlag.jcreator.activity.creator;
+package com.jetlag.jcreator.stories;
 
 import com.jetlag.jcreator.pictures.Picture;
 
