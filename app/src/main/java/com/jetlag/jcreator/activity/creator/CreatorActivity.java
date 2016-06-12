@@ -19,6 +19,7 @@ import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.pictures.Picture;
 import com.jetlag.jcreator.pictures.PictureLoadedListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CreatorActivity extends AppCompatActivity implements PictureLoadedListener {
@@ -132,7 +133,7 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
     getPresenter().updateSelectedPictures();
     mViewPager.setCurrentItem(TEXT_FRAGMENT_POSITION);
     TextWriterFragment textWriterFragment = (TextWriterFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(TEXT_FRAGMENT_POSITION));
-    textWriterFragment.updatePickedPictures();
+    textWriterFragment.updateStory();
   }
 
   public CreatorPresenter getPresenter() {
@@ -152,9 +153,19 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
   }
 
   public void writeTextAndGoToArticlePreview(String text) {
-    getPresenter().setText(text);
+    getPresenter().setStoryText(text);
     mViewPager.setCurrentItem(PREVIEW_FRAGMENT_POSITION);
     ArticlePreviewFragment articlePreviewFragment = (ArticlePreviewFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(PREVIEW_FRAGMENT_POSITION));
-    articlePreviewFragment.updatePictures();
+    articlePreviewFragment.updateStory();
+  }
+
+  public void addStoryAndStartNewStory() {
+    Story story = new Story();
+    story.setPictures(new ArrayList<>(getPresenter().getSelectedPictures()));
+    story.setStoryText(getPresenter().getStoryText());
+    getPresenter().addStory(story);
+    getPresenter().setStoryText("");
+    getPresenter().getSelectedPictures().clear();
+    mViewPager.setCurrentItem(PICTURE_FRAGMENT_POSITION);
   }
 }

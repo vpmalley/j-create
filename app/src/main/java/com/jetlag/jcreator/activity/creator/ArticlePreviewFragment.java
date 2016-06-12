@@ -49,7 +49,6 @@ public class ArticlePreviewFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_creator_preview, container, false);
     findViews(rootView);
     displayPictures();
-    displayStory();
     nextStoryButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -73,13 +72,15 @@ public class ArticlePreviewFragment extends Fragment {
   }
 
   private void displayStory() {
-    storyView.setText(((CreatorActivity) getActivity()).getPresenter().getText());
+    storyView.setText(((CreatorActivity) getActivity()).getPresenter().getStoryText());
   }
 
   private void onClickNextStoryButton() {
+    ((CreatorActivity) getActivity()).addStoryAndStartNewStory();
   }
 
-  public void updatePictures() {
+  public void updateStory() {
     picturesView.getAdapter().notifyDataSetChanged();
+    displayStory();
   }
 }

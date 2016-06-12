@@ -72,12 +72,17 @@ public class TextWriterFragment extends Fragment {
     picturesView.setLayoutManager(layoutManager);
   }
 
+  private void displayStory() {
+    storyEditor.setText(((CreatorActivity) getActivity()).getPresenter().getStoryText());
+  }
+
   private void onClickNextButton() {
     String text = storyEditor.getText().toString();
     ((CreatorActivity) getActivity()).writeTextAndGoToArticlePreview(text);
   }
 
-  public void updatePickedPictures() {
+  public void updateStory() {
     picturesView.getAdapter().notifyDataSetChanged();
+    displayStory();
   }
 }

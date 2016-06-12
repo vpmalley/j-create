@@ -12,11 +12,13 @@ public class CreatorPresenter {
 
   private List<Picture> selectablePictures;
   private List<Picture> selectedPictures;
-  private String text;
+  private String storyText;
+  private List<Story> stories;
 
   public CreatorPresenter() {
     selectablePictures = new ArrayList<>();
     selectedPictures = new ArrayList<>();
+    stories = new ArrayList<>();
   }
 
   public List<Picture> getSelectablePictures() {
@@ -46,11 +48,19 @@ public class CreatorPresenter {
     }
   }
 
-  public void setText(String text) {
-    this.text = text;
+  public void setStoryText(String storyText) {
+    this.storyText = storyText;
   }
 
-  public String getText() {
-    return text;
+  public String getStoryText() {
+    return storyText;
+  }
+
+  public List<Story> getStories() {
+    return stories;
+  }
+
+  public void addStory(Story story) {
+    this.stories.add(story);
   }
 }
