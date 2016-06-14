@@ -1,4 +1,4 @@
-package com.jetlag.jcreator.activity.creator;
+package com.jetlag.jcreator.pictures;
 
 import android.app.Activity;
 import android.support.v4.content.ContextCompat;
@@ -10,7 +10,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.jetlag.jcreator.R;
-import com.jetlag.jcreator.pictures.Picture;
 
 import java.util.List;
 
@@ -46,9 +45,9 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
     Glide
         .with(activity)
         .load(p.getUri())
-        .into(pictureHolder.getImageView());
+        .into(pictureHolder.getPictureView());
 
-    pictureHolder.getImageView().setOnClickListener(new OnPictureClickListener(pictureHolder));
+    pictureHolder.getPictureView().setOnClickListener(new OnPictureClickListener(pictureHolder));
   }
 
   @Override
@@ -70,7 +69,6 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
       Picture picture = getPicture();
       picture.setPicked(!picture.isPicked());
       if (picture.isPicked()) {
-
         view.setBackgroundColor(view.getResources().getColor(android.R.color.holo_blue_dark));
       } else {
         view.setBackgroundColor(ContextCompat.getColor(view.getContext(), R.color.transparent));

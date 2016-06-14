@@ -67,9 +67,12 @@ public class CreatorViewModel {
 
   public void commitStory() {
     Story story = new Story();
-    story.setPictures(new ArrayList<>(getSelectedPictures()));
+    story.setPictures(getSelectedPictures());
     story.setStoryText(getStoryText());
     addStory(story);
+  }
+
+  public void clearCurrentStory() {
     setStoryText("");
     getSelectedPictures().clear();
   }

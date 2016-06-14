@@ -2,6 +2,7 @@ package com.jetlag.jcreator.stories;
 
 import com.jetlag.jcreator.pictures.Picture;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,12 +13,16 @@ public class Story {
   private List<Picture> pictures;
   private String storyText;
 
+  public Story() {
+    pictures = new ArrayList<>();
+  }
+
   public List<Picture> getPictures() {
     return pictures;
   }
 
   public void setPictures(List<Picture> pictures) {
-    this.pictures = pictures;
+    this.pictures.addAll(pictures);
   }
 
   public String getStoryText() {

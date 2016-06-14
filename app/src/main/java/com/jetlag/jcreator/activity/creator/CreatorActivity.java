@@ -157,21 +157,22 @@ public class CreatorActivity extends AppCompatActivity implements PictureLoadedL
 
   public void writeTextAndGoToArticlePreview(String text) {
     getViewModel().setStoryText(text);
+    getViewModel().commitStory();
     moveToStoryPreview();
   }
 
   private void moveToStoryPreview() {
     mViewPager.setCurrentItem(PREVIEW_FRAGMENT_POSITION);
     ArticlePreviewFragment articlePreviewFragment = (ArticlePreviewFragment) getSupportFragmentManager().findFragmentByTag(getFragmentTag(PREVIEW_FRAGMENT_POSITION));
-    articlePreviewFragment.updateStory();
+    articlePreviewFragment.updateStories();
   }
 
   public void addStoryAndStartNewStory() {
-    getViewModel().commitStory();
     moveToPicturePicking();
   }
 
   private void moveToPicturePicking() {
+    getViewModel().clearCurrentStory();
     mViewPager.setCurrentItem(PICTURE_FRAGMENT_POSITION);
   }
 }

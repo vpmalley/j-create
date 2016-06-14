@@ -12,6 +12,7 @@ import android.widget.EditText;
 
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.pictures.Picture;
+import com.jetlag.jcreator.pictures.PictureAdapter;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class TextWriterFragment extends Fragment {
     View rootView = inflater.inflate(R.layout.fragment_creator_text, container, false);
     findViews(rootView);
     displayPictures();
-    storyEditor.requestFocus();
+//    storyEditor.requestFocus();
     nextButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {

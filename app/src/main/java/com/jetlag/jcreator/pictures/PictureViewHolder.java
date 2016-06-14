@@ -1,4 +1,4 @@
-package com.jetlag.jcreator.activity.creator;
+package com.jetlag.jcreator.pictures;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -11,15 +11,15 @@ public class PictureViewHolder extends RecyclerView.ViewHolder {
 
   private final View mainView;
 
-  private final ImageView imageView;
+  private final ImageView pictureView;
 
-  public PictureViewHolder(View mainView, ImageView imageView) {
-    super(imageView);
+  public PictureViewHolder(View mainView, ImageView pictureView) {
+    super(pictureView);
     this.mainView = mainView;
-    this.imageView = imageView;
+    this.pictureView = pictureView;
   }
 
-  public ImageView getImageView() {
-    return imageView;
+  public ImageView getPictureView() {
+    return pictureView;
   }
 }

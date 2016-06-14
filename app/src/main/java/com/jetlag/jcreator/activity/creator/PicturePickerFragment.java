@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.pictures.Picture;
+import com.jetlag.jcreator.pictures.PictureAdapter;
 import com.jetlag.jcreator.pictures.PictureFromGalleryLoader;
 import com.jetlag.jcreator.pictures.PictureLoadedListener;
 

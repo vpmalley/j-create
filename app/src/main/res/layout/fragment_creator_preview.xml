@@ -15,20 +15,6 @@
         android:paddingRight="5dp"
         android:text="Here is your story !"/>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/pictures"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/user_help"
-        />
-
-    <TextView
-        android:id="@+id/story"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pictures"
-        />
-
     <Button
         android:id="@+id/nextStory"
         android:layout_width="wrap_content"
@@ -36,8 +22,8 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="50dp"
-        android:layout_below="@id/story"
+        android:layout_marginBottom="10dp"
+        android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
         android:gravity="center"
         android:layout_alignParentRight="true"
@@ -46,5 +32,13 @@
         android:text="@string/next_article"
         android:textColor="@android:color/primary_text_dark"
         android:padding="10dp"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/stories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_help"
+        android:layout_above="@id/nextStory"
+        />
 
 </RelativeLayout>
