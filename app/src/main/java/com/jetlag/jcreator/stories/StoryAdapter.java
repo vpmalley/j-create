@@ -45,7 +45,7 @@ public class StoryAdapter extends RecyclerView.Adapter<StoryViewHolder> {
     Story s = stories.get(position);
     holder.getStoryView().setText(s.getStoryText());
     LinearLayoutManager layoutManager = new LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false);
-    holder.getPicturesView().setAdapter(new PictureAdapter(activity, R.layout.picture_thumbnail_cell, s.getPictures()));
+    holder.getPicturesView().setAdapter(new PictureAdapter(activity, R.layout.picture_thumbnail_cell, s.getPictures(), false));
     holder.getPicturesView().setLayoutManager(layoutManager);
   }
 

@@ -24,11 +24,14 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
 
   private final List<Picture> pictures;
 
-  public PictureAdapter(Activity activity, int resource, List<Picture> objects) {
+  private final boolean clickablePics;
+
+  public PictureAdapter(Activity activity, int resource, List<Picture> objects, boolean clickablePics) {
     super();
     this.activity = activity;
     this.resource = resource;
     this.pictures = objects;
+    this.clickablePics = clickablePics;
   }
 
   @Override
@@ -47,7 +50,9 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
         .load(p.getUri())
         .into(pictureHolder.getPictureView());
 
-    pictureHolder.getPictureView().setOnClickListener(new OnPictureClickListener(pictureHolder));
+    if (clickablePics) {
+      pictureHolder.getPictureView().setOnClickListener(new OnPictureClickListener(pictureHolder));
+    }
   }
 
   @Override

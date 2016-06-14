@@ -69,7 +69,7 @@ public class PicturePickerFragment extends Fragment {
   public void displayPictures() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
     List<Picture> selectablePictures = ((CreatorActivity) getActivity()).getViewModel().getSelectablePictures();
-    picturesView.setAdapter(new PictureAdapter(getActivity(), R.layout.picture_thumbnail_cell, selectablePictures));
+    picturesView.setAdapter(new PictureAdapter(getActivity(), R.layout.picture_thumbnail_cell, selectablePictures, true));
     picturesView.setLayoutManager(layoutManager);
   }
 
