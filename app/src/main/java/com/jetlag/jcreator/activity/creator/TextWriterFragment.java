@@ -49,10 +49,9 @@ public class TextWriterFragment extends Fragment {
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
+    getActivity().setTitle("Tell about an anecdote");
     View rootView = inflater.inflate(R.layout.fragment_creator_text, container, false);
     findViews(rootView);
-    displayPictures();
-//    storyEditor.requestFocus();
     nextButton.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -90,7 +89,6 @@ public class TextWriterFragment extends Fragment {
   }
 
   public void updateStory() {
-    picturesView.getAdapter().notifyDataSetChanged();
     displayStory();
   }
 }

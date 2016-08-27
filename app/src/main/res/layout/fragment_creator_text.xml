@@ -6,38 +6,14 @@
                 android:paddingTop="@dimen/activity_vertical_margin"
                 tools:context=".activity.creator.PicturePickerFragment">
 
-    <TextView
-        android:id="@+id/user_help"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="Based on these pictures you picked"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/pictures"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_below="@id/user_help"
-        />
-
-    <TextView
-        android:id="@+id/user_help_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/pictures"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:text="Please describe your day ..."/>
-
     <EditText
         android:id="@+id/story"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_help_1"
-        android:inputType="textMultiLine"
+        android:layout_alignParentTop="true"
         android:hint="What did you discover today? What food did you try?"
+        android:inputType="textLongMessage|textMultiLine"
+        android:gravity="top"
         />
 
     <Button
