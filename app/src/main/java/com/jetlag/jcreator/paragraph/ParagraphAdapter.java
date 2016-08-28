@@ -20,11 +20,15 @@ public class ParagraphAdapter extends RecyclerView.Adapter<ParagraphViewHolder> 
 
   private final int resource;
 
-  private final List<String> paragraphs;
+  private List<String> paragraphs;
 
   public ParagraphAdapter(Activity activity, int resource, List<String> paragraphs) {
     this.activity = activity;
     this.resource = resource;
+    this.paragraphs = paragraphs;
+  }
+
+  public void setParagraphs(List<String> paragraphs) {
     this.paragraphs = paragraphs;
   }
 

@@ -12,13 +12,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.google.android.agera.MutableRepository;
+import com.google.android.agera.Repositories;
+import com.google.android.agera.Updatable;
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.paragraph.ParagraphAdapter;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class ChatStoryActivity extends AppCompatActivity {
-
 
   private FloatingActionButton fab;
   private RecyclerView paragraphs;
@@ -26,6 +30,8 @@ public class ChatStoryActivity extends AppCompatActivity {
   private Button addParagraph;
   private TextView textInput;
   private TextView pictureInput;
+
+  private MutableRepository<String> nextParagraphText;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,14 +42,46 @@ public class ChatStoryActivity extends AppCompatActivity {
 
     findAllViews();
     setupFab(fab);
-    fillParagraphs();
+    createRepos();
+    initParagraphs();
+    bindActions();
+
+    Updatable paragraphsRepo = new Updatable() {
+
+      private List<String> paragraphs = new ArrayList<>();
+
+      @Override
+      public void update() {
+        paragraphs.add(nextParagraphText.get());
+        displayParagraphs(paragraphs);
+      }
+    };
+    nextParagraphText.addUpdatable(paragraphsRepo);
   }
 
-  private void fillParagraphs() {
-    LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+  private void bindActions() {
+    addParagraph.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        nextParagraphText.accept(nextParagraph.getText().toString());
+        nextParagraph.setText("");
+      }
+    });
+  }
 
+  private void createRepos() {
+    nextParagraphText = Repositories.mutableRepository("");
+  }
+
+  private void initParagraphs() {
+    LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
     paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, Collections.singletonList("Hello world")));
     paragraphs.setLayoutManager(layoutManager);
+  }
+
+  private void displayParagraphs(List<String> newParagraphs) {
+    ((ParagraphAdapter) paragraphs.getAdapter()).setParagraphs(newParagraphs);
+    paragraphs.getAdapter().notifyDataSetChanged();
   }
 
   private FloatingActionButton findAllViews() {
