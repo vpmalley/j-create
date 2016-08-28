@@ -2,4 +2,5 @@
 <resources>
     <string name="next">SUIVANT</string>
     <string name="next_article">ADD ANOTHER STORY</string>
+    <string name="next_paragraph_hint">Have you discovered a new gem this morning?</string>
 </resources>

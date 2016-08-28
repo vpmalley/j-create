@@ -10,16 +10,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.jetlag.jcreator.R;
-import com.jetlag.jcreator.activity.creator.CreatorActivity;
 import com.jetlag.jcreator.paragraph.ParagraphAdapter;
-import com.jetlag.jcreator.stories.Story;
-import com.jetlag.jcreator.stories.StoryAdapter;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class ChatStoryActivity extends AppCompatActivity {
 
@@ -28,6 +24,8 @@ public class ChatStoryActivity extends AppCompatActivity {
   private RecyclerView paragraphs;
   private EditText nextParagraph;
   private Button addParagraph;
+  private TextView textInput;
+  private TextView pictureInput;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +49,11 @@ public class ChatStoryActivity extends AppCompatActivity {
   private FloatingActionButton findAllViews() {
     fab = (FloatingActionButton) findViewById(R.id.fab);
     paragraphs = (RecyclerView) findViewById(R.id.paragraphs);
-    nextParagraph = (EditText) findViewById(R.id.nextParagraph);
-    addParagraph = (Button) findViewById(R.id.addParagraph);
+    nextParagraph = (EditText) findViewById(R.id.text_paragraph);
+    addParagraph = (Button) findViewById(R.id.add_paragraph);
+    textInput = (TextView) findViewById(R.id.text_input);
+    pictureInput = (TextView) findViewById(R.id.picture_input);
+
     return fab;
   }
 
