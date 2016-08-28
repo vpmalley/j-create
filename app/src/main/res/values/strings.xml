@@ -4,4 +4,5 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="next">NEXT</string>
     <string name="next_article">ADD ANOTHER STORY</string>
+    <string name="title_activity_chat_story">Write your story</string>
 </resources>
