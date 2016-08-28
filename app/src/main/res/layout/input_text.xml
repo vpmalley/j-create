@@ -26,11 +26,12 @@
 
     <Button
         android:id="@+id/add_paragraph"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:text=">" />
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
+        android:text="OK" />
 
 </RelativeLayout>
