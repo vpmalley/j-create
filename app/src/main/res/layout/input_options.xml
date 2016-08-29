@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="30dp"
+    android:layout_alignParentBottom="true">
 
     <TextView
         android:id="@+id/text_input"
@@ -31,7 +32,7 @@
         android:paddingLeft="6dp"
         android:paddingRight="6dp"
         android:paddingStart="6dp"
-        android:text="@string/input_content_text"
+        android:text="@string/input_content_picture"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:textColor="@android:color/tertiary_text_dark" />
 

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="next">SUIVANT</string>
-    <string name="next_article">ADD ANOTHER STORY</string>
-    <string name="next_paragraph_hint">Have you discovered a new gem this morning?</string>
+    <string name="next_article">AJOUTER UNE AUTRE HISTOIRE</string>
+    <string name="next_paragraph_hint">Qu\'as-tu découvert ce matin ?</string>
+    <string name="input_content_text">TEXTE</string>
+    <string name="input_content_picture">PHOTOS</string>
 </resources>

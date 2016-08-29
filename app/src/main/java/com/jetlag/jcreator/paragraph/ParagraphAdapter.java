@@ -36,7 +36,7 @@ public class ParagraphAdapter extends RecyclerView.Adapter<ParagraphViewHolder> 
   public ParagraphViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext())
         .inflate(resource, parent, false);
-    TextView storyView = (TextView) v.findViewById(R.id.paragraphs);
+    TextView storyView = (TextView) v.findViewById(R.id.paragraph_text);
     return new ParagraphViewHolder(v, storyView);
   }
 
@@ -50,6 +50,5 @@ public class ParagraphAdapter extends RecyclerView.Adapter<ParagraphViewHolder> 
   public int getItemCount() {
     return paragraphs.size();
   }
-
 
 }

@@ -82,6 +82,7 @@ public class ChatStoryActivity extends AppCompatActivity {
   private void displayParagraphs(List<String> newParagraphs) {
     ((ParagraphAdapter) paragraphs.getAdapter()).setParagraphs(newParagraphs);
     paragraphs.getAdapter().notifyDataSetChanged();
+    paragraphs.smoothScrollToPosition(newParagraphs.size() - 1);
   }
 
   private FloatingActionButton findAllViews() {
