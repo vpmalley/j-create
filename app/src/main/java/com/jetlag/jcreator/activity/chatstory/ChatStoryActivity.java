@@ -15,6 +15,8 @@ import android.widget.TextView;
 
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.paragraph.ParagraphAdapter;
+import com.jetlag.jcreator.pictures.Picture;
+import com.jetlag.jcreator.pictures.PictureAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,23 +47,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     setupFab();
     bindActions();
     initParagraphs();
-
-    textInputButton.setClickable(true);
-    textInputButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        pictureInput.setVisibility(View.GONE);
-        textInput.setVisibility(View.VISIBLE);
-      }
-    });
-    pictureInputButton.setClickable(true);
-    pictureInputButton.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        textInput.setVisibility(View.GONE);
-        pictureInput.setVisibility(View.VISIBLE);
-      }
-    });
+    initPictures();
   }
 
   @Override
@@ -82,12 +68,12 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     toolbar = (Toolbar) findViewById(R.id.toolbar);
     fab = (FloatingActionButton) findViewById(R.id.fab);
     paragraphs = (RecyclerView) findViewById(R.id.paragraphs);
-    textInput = (RelativeLayout) findViewById(R.id.next_paragraph);
+    textInput = (RelativeLayout) findViewById(R.id.next_text);
     nextParagraph = (EditText) findViewById(R.id.text_paragraph);
     addParagraph = (Button) findViewById(R.id.add_paragraph);
     pictureInput = (RelativeLayout) findViewById(R.id.next_pictures);
-//    nextPictures = (RecyclerView) findViewById(R.id.pictures_paragraph);
-//    addPictures = (Button) findViewById(R.id.add_pictures);
+    nextPictures = (RecyclerView) findViewById(R.id.pictures_paragraph);
+    addPictures = (Button) findViewById(R.id.add_pictures);
     textInputButton = (TextView) findViewById(R.id.text_input);
     pictureInputButton = (TextView) findViewById(R.id.picture_input);
     return fab;
@@ -106,6 +92,12 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
   }
 
   private void bindActions() {
+    bindAddParagraph();
+    bindTextInput();
+    bindPictureInput();
+  }
+
+  private void bindAddParagraph() {
     addParagraph.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -115,10 +107,38 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     });
   }
 
+  private void bindTextInput() {
+    textInputButton.setClickable(true);
+    textInputButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        pictureInput.setVisibility(View.GONE);
+        textInput.setVisibility(View.VISIBLE);
+      }
+    });
+  }
+
+  private void bindPictureInput() {
+    pictureInputButton.setClickable(true);
+    pictureInputButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        textInput.setVisibility(View.GONE);
+        pictureInput.setVisibility(View.VISIBLE);
+      }
+    });
+  }
+
   private void initParagraphs() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
     paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, new ArrayList<String>()));
     paragraphs.setLayoutManager(layoutManager);
+  }
+
+  private void initPictures() {
+    LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    nextPictures.setAdapter(new PictureAdapter(this, R.layout.picture_thumbnail_cell, new ArrayList<Picture>(), true));
+    nextPictures.setLayoutManager(layoutManager);
   }
 
   public void displayParagraphs(List<String> newParagraphs) {
