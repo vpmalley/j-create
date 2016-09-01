@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_above="@id/input_options"
+    android:visibility="gone">
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/pictures_paragraph"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/background_light"
+        android:paddingBottom="10dp"
+        android:paddingEnd="50dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="50dp"
+        android:paddingStart="10dp"
+        android:paddingTop="10dp" />
+
+    <Button
+        android:id="@+id/add_pictures"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:text="OK"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
+
+</RelativeLayout>

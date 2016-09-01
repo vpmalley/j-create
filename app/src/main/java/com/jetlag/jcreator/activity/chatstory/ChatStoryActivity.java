@@ -10,12 +10,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.paragraph.ParagraphAdapter;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDisplay {
@@ -23,10 +24,14 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
   private Toolbar toolbar;
   private FloatingActionButton fab;
   private RecyclerView paragraphs;
+  private RelativeLayout textInput;
   private EditText nextParagraph;
   private Button addParagraph;
-  private TextView textInput;
-  private TextView pictureInput;
+  private RelativeLayout pictureInput;
+  private RecyclerView nextPictures;
+  private Button addPictures;
+  private TextView textInputButton;
+  private TextView pictureInputButton;
 
   private ChatStoryActions chatStoryPresenter;
 
@@ -40,6 +45,23 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     setupFab();
     bindActions();
     initParagraphs();
+
+    textInputButton.setClickable(true);
+    textInputButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        pictureInput.setVisibility(View.GONE);
+        textInput.setVisibility(View.VISIBLE);
+      }
+    });
+    pictureInputButton.setClickable(true);
+    pictureInputButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        textInput.setVisibility(View.GONE);
+        pictureInput.setVisibility(View.VISIBLE);
+      }
+    });
   }
 
   @Override
@@ -60,11 +82,14 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     toolbar = (Toolbar) findViewById(R.id.toolbar);
     fab = (FloatingActionButton) findViewById(R.id.fab);
     paragraphs = (RecyclerView) findViewById(R.id.paragraphs);
+    textInput = (RelativeLayout) findViewById(R.id.next_paragraph);
     nextParagraph = (EditText) findViewById(R.id.text_paragraph);
     addParagraph = (Button) findViewById(R.id.add_paragraph);
-    textInput = (TextView) findViewById(R.id.text_input);
-    pictureInput = (TextView) findViewById(R.id.picture_input);
-
+    pictureInput = (RelativeLayout) findViewById(R.id.next_pictures);
+//    nextPictures = (RecyclerView) findViewById(R.id.pictures_paragraph);
+//    addPictures = (Button) findViewById(R.id.add_pictures);
+    textInputButton = (TextView) findViewById(R.id.text_input);
+    pictureInputButton = (TextView) findViewById(R.id.picture_input);
     return fab;
   }
 
@@ -92,7 +117,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
 
   private void initParagraphs() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, Collections.singletonList("Hello world")));
+    paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, new ArrayList<String>()));
     paragraphs.setLayoutManager(layoutManager);
   }
 

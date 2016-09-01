@@ -16,6 +16,10 @@
         android:id="@+id/next_paragraph"
         layout="@layout/input_text" />
 
+    <include
+        android:id="@+id/next_pictures"
+        layout="@layout/input_pictures" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/paragraphs"
         android:layout_width="match_parent"
