@@ -1,6 +1,9 @@
 package com.jetlag.jcreator.activity.chatstory;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.paragraph.ParagraphAdapter;
+import com.jetlag.jcreator.permission.PermissionChecker;
 import com.jetlag.jcreator.pictures.Picture;
 import com.jetlag.jcreator.pictures.PictureAdapter;
 
@@ -22,6 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDisplay {
+
+
+  public static final int REQ_READ_PICS = 101;
+  public static final String PERM_READ_PICS = Manifest.permission.READ_EXTERNAL_STORAGE;
 
   private Toolbar toolbar;
   private FloatingActionButton fab;
@@ -37,6 +45,10 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
 
   private ChatStoryActions chatStoryPresenter;
 
+  /**
+   * lifecycle
+   */
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -48,6 +60,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     bindActions();
     initParagraphs();
     initPictures();
+    new PermissionChecker().checkPermission(this, PERM_READ_PICS, REQ_READ_PICS, "Allow to add pictures from your device?");
   }
 
   @Override
@@ -91,6 +104,26 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     }
   }
 
+  /**
+   * init UI
+   */
+
+  private void initParagraphs() {
+    LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+    paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, new ArrayList<String>()));
+    paragraphs.setLayoutManager(layoutManager);
+  }
+
+  private void initPictures() {
+    LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+    nextPictures.setAdapter(new PictureAdapter(this, R.layout.picture_thumbnail_cell, new ArrayList<Picture>(), true));
+    nextPictures.setLayoutManager(layoutManager);
+  }
+
+  /**
+   * bind user actions
+   */
+
   private void bindActions() {
     bindAddParagraph();
     bindTextInput();
@@ -125,21 +158,16 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
       public void onClick(View view) {
         textInput.setVisibility(View.GONE);
         pictureInput.setVisibility(View.VISIBLE);
+        if (new PermissionChecker().checkPermission(ChatStoryActivity.this, PERM_READ_PICS, REQ_READ_PICS, "")) {
+          chatStoryPresenter.getLatestPicturesOnDevice();
+        }
       }
     });
   }
 
-  private void initParagraphs() {
-    LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, new ArrayList<String>()));
-    paragraphs.setLayoutManager(layoutManager);
-  }
-
-  private void initPictures() {
-    LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    nextPictures.setAdapter(new PictureAdapter(this, R.layout.picture_thumbnail_cell, new ArrayList<Picture>(), true));
-    nextPictures.setLayoutManager(layoutManager);
-  }
+  /**
+   * display data
+   */
 
   public void displayParagraphs(List<String> newParagraphs) {
     ((ParagraphAdapter) paragraphs.getAdapter()).setParagraphs(newParagraphs);
@@ -147,5 +175,19 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     paragraphs.smoothScrollToPosition(newParagraphs.size() - 1);
   }
 
+  /**
+   * callbacks
+   */
 
+  @Override
+  public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+    switch (requestCode) {
+      case REQ_READ_PICS: {
+        if (grantResults.length > 0
+            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+          chatStoryPresenter.getLatestPicturesOnDevice();
+        }
+      }
+    }
+  }
 }

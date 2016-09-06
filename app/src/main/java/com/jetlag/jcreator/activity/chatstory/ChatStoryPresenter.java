@@ -52,6 +52,11 @@ public class ChatStoryPresenter implements ChatStoryActions {
     paragraphsBuilder.removeUpdatable(paragraphsUpdatable);
   }
 
+  @Override
+  public void getLatestPicturesOnDevice() {
+    // TODO get them
+  }
+
   private class ParagraphsUpdatable implements Updatable {
 
     private final ChatStoryDisplay chatStoryDisplay;

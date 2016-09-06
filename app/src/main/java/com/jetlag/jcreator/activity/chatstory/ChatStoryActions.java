@@ -12,4 +12,6 @@ public interface ChatStoryActions {
   void bindUpdatables(ChatStoryDisplay chatStoryDisplay);
 
   void unbindUpdatables();
+
+  void getLatestPicturesOnDevice();
 }
