@@ -66,7 +66,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
   @Override
   protected void onStart() {
     super.onStart();
-    chatStoryPresenter = new ChatStoryPresenter();
+    chatStoryPresenter = new ChatStoryPresenter(this);
     chatStoryPresenter.createRepos();
     chatStoryPresenter.bindUpdatables(this);
   }
@@ -173,6 +173,12 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     ((ParagraphAdapter) paragraphs.getAdapter()).setParagraphs(newParagraphs);
     paragraphs.getAdapter().notifyDataSetChanged();
     paragraphs.smoothScrollToPosition(newParagraphs.size() - 1);
+  }
+
+  @Override
+  public void displayPictures(ArrayList<Picture> pictures) {
+    ((PictureAdapter) nextPictures.getAdapter()).setPictures(pictures);
+    nextPictures.getAdapter().notifyDataSetChanged();
   }
 
   /**

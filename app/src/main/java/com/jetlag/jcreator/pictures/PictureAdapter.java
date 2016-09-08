@@ -22,7 +22,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
 
   private final int resource;
 
-  private final List<Picture> pictures;
+  private List<Picture> pictures;
 
   private final boolean clickablePics;
 
@@ -32,6 +32,10 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
     this.resource = resource;
     this.pictures = objects;
     this.clickablePics = clickablePics;
+  }
+
+  public void setPictures(List<Picture> pictures) {
+    this.pictures = pictures;
   }
 
   @Override
