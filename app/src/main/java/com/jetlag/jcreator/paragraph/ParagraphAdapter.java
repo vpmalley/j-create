@@ -20,15 +20,15 @@ public class ParagraphAdapter extends RecyclerView.Adapter<ParagraphViewHolder> 
 
   private final int resource;
 
-  private List<String> paragraphs;
+  private List<TextParagraph> paragraphs;
 
-  public ParagraphAdapter(Activity activity, int resource, List<String> paragraphs) {
+  public ParagraphAdapter(Activity activity, int resource, List<TextParagraph> paragraphs) {
     this.activity = activity;
     this.resource = resource;
     this.paragraphs = paragraphs;
   }
 
-  public void setParagraphs(List<String> paragraphs) {
+  public void setParagraphs(List<TextParagraph> paragraphs) {
     this.paragraphs = paragraphs;
   }
 
@@ -42,7 +42,7 @@ public class ParagraphAdapter extends RecyclerView.Adapter<ParagraphViewHolder> 
 
   @Override
   public void onBindViewHolder(ParagraphViewHolder holder, int position) {
-    String s = paragraphs.get(position);
+    String s = paragraphs.get(position).getText();
     holder.getParagraphView().setText(s);
   }
 

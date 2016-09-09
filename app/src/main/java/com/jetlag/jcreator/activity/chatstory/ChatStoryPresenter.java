@@ -7,6 +7,7 @@ import com.google.android.agera.Repositories;
 import com.google.android.agera.Repository;
 import com.jetlag.jcreator.merger.StringListMerger;
 import com.jetlag.jcreator.observable.GalleryPicturesGetterObservable;
+import com.jetlag.jcreator.paragraph.TextParagraph;
 import com.jetlag.jcreator.pictures.GalleryPicturesSupplier;
 import com.jetlag.jcreator.pictures.Picture;
 import com.jetlag.jcreator.updatable.ParagraphsUpdatable;
@@ -21,12 +22,12 @@ public class ChatStoryPresenter implements ChatStoryActions {
 
   private MutableRepository<String> nextTextParagraphRepo;
   private ParagraphsUpdatable paragraphsUpdatable;
-  private Repository<ArrayList<String>> paragraphsRepo;
+  private Repository<ArrayList<TextParagraph>> paragraphsRepo;
   private final Context context;
   private Repository<ArrayList<Picture>> galleryPicturesRepo;
   private GalleryPicturesGetterObservable galleryPicturesGetterObservable;
   private PicturesInputUpdatable picturesInputUpdatable;
-  private MutableRepository<ArrayList<String>> innerParagraphsRepo;
+  private MutableRepository<ArrayList<TextParagraph>> innerParagraphsRepo;
 
   public ChatStoryPresenter(Context context) {
     this.context = context;
@@ -49,8 +50,8 @@ public class ChatStoryPresenter implements ChatStoryActions {
   }
 
   private void createParagraphsRepo() {
-    innerParagraphsRepo = Repositories.mutableRepository(new ArrayList<String>());
-    paragraphsRepo = Repositories.repositoryWithInitialValue(new ArrayList<String>())
+    innerParagraphsRepo = Repositories.mutableRepository(new ArrayList<TextParagraph>());
+    paragraphsRepo = Repositories.repositoryWithInitialValue(new ArrayList<TextParagraph>())
         .observe(nextTextParagraphRepo)
         .onUpdatesPerLoop()
         .getFrom(nextTextParagraphRepo)

@@ -3,6 +3,7 @@ package com.jetlag.jcreator.updatable;
 import com.google.android.agera.Repository;
 import com.google.android.agera.Updatable;
 import com.jetlag.jcreator.activity.chatstory.ChatStoryDisplay;
+import com.jetlag.jcreator.paragraph.TextParagraph;
 
 import java.util.ArrayList;
 
@@ -12,9 +13,9 @@ import java.util.ArrayList;
 public class ParagraphsUpdatable implements Updatable {
 
   private final ChatStoryDisplay chatStoryDisplay;
-  private final Repository<ArrayList<String>> paragraphsRepo;
+  private final Repository<ArrayList<TextParagraph>> paragraphsRepo;
 
-  public ParagraphsUpdatable(ChatStoryDisplay chatStoryDisplay, Repository<ArrayList<String>> paragraphsRepo) {
+  public ParagraphsUpdatable(ChatStoryDisplay chatStoryDisplay, Repository<ArrayList<TextParagraph>> paragraphsRepo) {
     this.chatStoryDisplay = chatStoryDisplay;
     this.paragraphsRepo = paragraphsRepo;
   }
