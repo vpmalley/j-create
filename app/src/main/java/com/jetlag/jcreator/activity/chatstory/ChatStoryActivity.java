@@ -111,7 +111,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
 
   private void initParagraphs() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, new ArrayList<Paragraph>()));
+    paragraphs.setAdapter(new ParagraphAdapter(this, new ArrayList<Paragraph>()));
     paragraphs.setLayoutManager(layoutManager);
   }
 
