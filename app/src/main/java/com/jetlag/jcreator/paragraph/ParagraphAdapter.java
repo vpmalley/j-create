@@ -48,9 +48,11 @@ public class ParagraphAdapter extends RecyclerView.Adapter<ParagraphViewHolder> 
     switch (getItemViewType(position)) {
       case TYPE_PICTURE:
         pictureParagraphAdapter.onBindViewHolder((PictureParagraphViewHolder) holder, (PictureParagraph) paragraphs.get(position));
+        break;
       case TYPE_TEXT:
       default:
         textParagraphAdapter.onBindViewHolder((TextParagraphViewHolder) holder, (TextParagraph) paragraphs.get(position));
+        break;
     }
   }
 

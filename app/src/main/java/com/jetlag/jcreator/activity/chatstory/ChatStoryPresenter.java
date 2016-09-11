@@ -11,6 +11,7 @@ import com.google.android.agera.Repository;
 import com.jetlag.jcreator.merger.ParagraphListMerger;
 import com.jetlag.jcreator.observable.GalleryPicturesGetterObservable;
 import com.jetlag.jcreator.paragraph.Paragraph;
+import com.jetlag.jcreator.paragraph.PictureParagraph;
 import com.jetlag.jcreator.paragraph.TextParagraph;
 import com.jetlag.jcreator.pictures.GalleryPicturesSupplier;
 import com.jetlag.jcreator.pictures.Picture;
@@ -26,13 +27,14 @@ public class ChatStoryPresenter implements ChatStoryActions {
 
   private MutableRepository<TextParagraph> nextTextParagraphRepo;
   private ParagraphsUpdatable paragraphsUpdatable;
-  private Repository<ArrayList<Paragraph>> paragraphsRepo;
+  private Repository<ArrayList<Paragraph>> textParagraphsRepo;
   private final Context context;
   private Repository<ArrayList<Picture>> galleryPicturesRepo;
   private GalleryPicturesGetterObservable galleryPicturesGetterObservable;
   private PicturesInputUpdatable picturesInputUpdatable;
-  private MutableRepository<ArrayList<Paragraph>> innerParagraphsRepo;
-  private MutableRepository<ArrayList<Picture>> nextPictureParagraphRepo;
+  private MutableRepository<ArrayList<Paragraph>> paragraphsRepo;
+  private MutableRepository<PictureParagraph> nextPictureParagraphRepo;
+  private Repository<ArrayList<Paragraph>> picturesParagraphsRepo;
 
   public ChatStoryPresenter(Context context) {
     this.context = context;
@@ -40,12 +42,13 @@ public class ChatStoryPresenter implements ChatStoryActions {
 
   public void createRepos() {
     nextTextParagraphRepo = Repositories.mutableRepository(new TextParagraph(""));
-    createGalleryPicturesRepo();
-    createParagraphsRepo();
-    nextPictureParagraphRepo = Repositories.mutableRepository(new ArrayList<Picture>());
+    nextPictureParagraphRepo = Repositories.mutableRepository(new PictureParagraph(new ArrayList<Picture>()));
+    createNextGalleryPicturesParagraphRepo();
+    createTextParagraphsRepo();
+    createPicturesParagraphsRepo();
   }
 
-  private void createGalleryPicturesRepo() {
+  private void createNextGalleryPicturesParagraphRepo() {
     galleryPicturesGetterObservable = new GalleryPicturesGetterObservable();
     galleryPicturesRepo = Repositories.repositoryWithInitialValue(new ArrayList<Picture>())
         .observe(galleryPicturesGetterObservable)
@@ -55,9 +58,9 @@ public class ChatStoryPresenter implements ChatStoryActions {
         .compile();
   }
 
-  private void createParagraphsRepo() {
-    innerParagraphsRepo = Repositories.mutableRepository(new ArrayList<Paragraph>());
-    paragraphsRepo = Repositories.repositoryWithInitialValue(new ArrayList<Paragraph>())
+  private void createTextParagraphsRepo() {
+    paragraphsRepo = Repositories.mutableRepository(new ArrayList<Paragraph>());
+    textParagraphsRepo = Repositories.repositoryWithInitialValue(new ArrayList<Paragraph>())
         .observe(nextTextParagraphRepo)
         .onUpdatesPerLoop()
         .getFrom(nextTextParagraphRepo)
@@ -75,28 +78,53 @@ public class ChatStoryPresenter implements ChatStoryActions {
             return input;
           }
         })
-        .thenMergeIn(innerParagraphsRepo, new ParagraphListMerger())
+        .thenMergeIn(paragraphsRepo, new ParagraphListMerger())
         .compile();
   }
 
-  public void addParagraph(String newParagraph) {
+  private void createPicturesParagraphsRepo() {
+    picturesParagraphsRepo = Repositories.repositoryWithInitialValue(new ArrayList<Paragraph>())
+        .observe(nextPictureParagraphRepo)
+        .onUpdatesPerLoop()
+        .getFrom(nextPictureParagraphRepo)
+        .check(new Predicate<PictureParagraph>() {
+          @Override
+          public boolean apply(@NonNull PictureParagraph value) {
+            return !value.getPictures().isEmpty();
+          }
+        })
+        .orSkip()
+        .transform(new Function<PictureParagraph, Paragraph>() {
+          @NonNull
+          @Override
+          public Paragraph apply(@NonNull PictureParagraph input) {
+            return input;
+          }
+        })
+        .thenMergeIn(paragraphsRepo, new ParagraphListMerger())
+        .compile();
+  }
+
+  public void addTextParagraph(String newParagraph) {
     nextTextParagraphRepo.accept(new TextParagraph(newParagraph));
   }
 
-  public void addPictures(ArrayList<Picture> newPictures) {
-    nextPictureParagraphRepo.accept(newPictures);
+  public void addPictureParagraph(ArrayList<Picture> newPictures) {
+    nextPictureParagraphRepo.accept(new PictureParagraph(newPictures));
   }
 
   public void bindUpdatables(ChatStoryDisplay chatStoryDisplay) {
     paragraphsUpdatable = new ParagraphsUpdatable(chatStoryDisplay, paragraphsRepo);
-    paragraphsRepo.addUpdatable(paragraphsUpdatable);
+    textParagraphsRepo.addUpdatable(paragraphsUpdatable);
+    picturesParagraphsRepo.addUpdatable(paragraphsUpdatable);
 
     picturesInputUpdatable = new PicturesInputUpdatable(chatStoryDisplay, galleryPicturesRepo);
     galleryPicturesRepo.addUpdatable(picturesInputUpdatable);
   }
 
   public void unbindUpdatables() {
-    paragraphsRepo.removeUpdatable(paragraphsUpdatable);
+    textParagraphsRepo.removeUpdatable(paragraphsUpdatable);
+    picturesParagraphsRepo.removeUpdatable(paragraphsUpdatable);
     galleryPicturesRepo.removeUpdatable(picturesInputUpdatable);
   }
 

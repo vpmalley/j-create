@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.jetlag.jcreator.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,6 +39,22 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
     this.pictures = pictures;
   }
 
+  public ArrayList<Picture> getPickedPictures() {
+    ArrayList<Picture> pickedPictures = new ArrayList<>();
+    for (Picture p : pictures) {
+      if (p.isPicked()) {
+        pickedPictures.add(p);
+      }
+    }
+    return pickedPictures;
+  }
+
+  public void resetPickedPictures() {
+    for (Picture p : pictures) {
+      p.setPicked(false);
+    }
+  }
+
   @Override
   public PictureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext())
@@ -49,13 +66,19 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
   @Override
   public void onBindViewHolder(PictureViewHolder pictureHolder, int position) {
     Picture p = pictures.get(position);
+    ImageView pictureView = pictureHolder.getPictureView();
     Glide
         .with(activity)
         .load(p.getUri())
-        .into(pictureHolder.getPictureView());
+        .into(pictureView);
 
     if (clickablePics) {
-      pictureHolder.getPictureView().setOnClickListener(new OnPictureClickListener(pictureHolder));
+      pictureView.setOnClickListener(new OnPictureClickListener(pictureHolder));
+      if (p.isPicked()) {
+        pictureView.setBackgroundColor(pictureView.getResources().getColor(android.R.color.holo_blue_dark));
+      } else {
+        pictureView.setBackgroundColor(ContextCompat.getColor(pictureView.getContext(), R.color.transparent));
+      }
     }
   }
 
@@ -63,7 +86,6 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
   public int getItemCount() {
     return pictures.size();
   }
-
 
   public class OnPictureClickListener implements View.OnClickListener {
 
@@ -89,7 +111,4 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
       return PictureAdapter.this.pictures.get(adapterPosition);
     }
   }
-
-
-
 }

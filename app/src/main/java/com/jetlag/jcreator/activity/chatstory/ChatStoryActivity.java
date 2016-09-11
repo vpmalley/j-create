@@ -126,17 +126,31 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
    */
 
   private void bindActions() {
-    bindAddParagraph();
+    bindAddTextParagraph();
+    bindAddPictureParagraph();
     bindTextInput();
     bindPictureInput();
   }
 
-  private void bindAddParagraph() {
+  private void bindAddTextParagraph() {
     addParagraph.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
-        chatStoryPresenter.addParagraph(nextParagraph.getText().toString());
+        chatStoryPresenter.addTextParagraph(nextParagraph.getText().toString());
         nextParagraph.setText("");
+      }
+    });
+  }
+
+  private void bindAddPictureParagraph() {
+    addPictures.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        PictureAdapter nextPicturesAdapter = (PictureAdapter) nextPictures.getAdapter();
+        ArrayList<Picture> pickedPictures = nextPicturesAdapter.getPickedPictures();
+        chatStoryPresenter.addPictureParagraph(pickedPictures);
+        nextPicturesAdapter.resetPickedPictures();
+        nextPicturesAdapter.notifyDataSetChanged();
       }
     });
   }
@@ -173,7 +187,9 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
   public void displayParagraphs(List<Paragraph> newParagraphs) {
     ((ParagraphAdapter) paragraphs.getAdapter()).setParagraphs(newParagraphs);
     paragraphs.getAdapter().notifyDataSetChanged();
-    paragraphs.smoothScrollToPosition(newParagraphs.size() - 1);
+    if (!newParagraphs.isEmpty()) {
+      paragraphs.smoothScrollToPosition(newParagraphs.size() - 1);
+    }
   }
 
   @Override
