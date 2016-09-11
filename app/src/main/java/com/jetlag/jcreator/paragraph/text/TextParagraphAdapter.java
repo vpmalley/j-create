@@ -1,4 +1,4 @@
-package com.jetlag.jcreator.paragraph;
+package com.jetlag.jcreator.paragraph.text;
 
 import android.view.LayoutInflater;
 import android.view.View;

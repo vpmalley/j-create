@@ -1,7 +1,9 @@
-package com.jetlag.jcreator.paragraph;
+package com.jetlag.jcreator.paragraph.text;
 
 import android.view.View;
 import android.widget.TextView;
+
+import com.jetlag.jcreator.paragraph.ParagraphViewHolder;
 
 /**
  * Created by vince on 28/08/16.

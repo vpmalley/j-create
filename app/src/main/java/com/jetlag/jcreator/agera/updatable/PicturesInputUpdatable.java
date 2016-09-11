@@ -1,4 +1,4 @@
-package com.jetlag.jcreator.updatable;
+package com.jetlag.jcreator.agera.updatable;
 
 import com.google.android.agera.Repository;
 import com.google.android.agera.Updatable;

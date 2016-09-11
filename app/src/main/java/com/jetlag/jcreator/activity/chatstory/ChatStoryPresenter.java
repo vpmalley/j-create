@@ -1,22 +1,23 @@
 package com.jetlag.jcreator.activity.chatstory;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 
-import com.google.android.agera.Function;
 import com.google.android.agera.MutableRepository;
-import com.google.android.agera.Predicate;
 import com.google.android.agera.Repositories;
 import com.google.android.agera.Repository;
-import com.jetlag.jcreator.merger.ParagraphListMerger;
-import com.jetlag.jcreator.observable.GalleryPicturesGetterObservable;
+import com.jetlag.jcreator.agera.cast.PictureParagraphCaster;
+import com.jetlag.jcreator.agera.cast.TextParagraphCaster;
+import com.jetlag.jcreator.agera.merger.ParagraphListMerger;
+import com.jetlag.jcreator.agera.observable.GalleryPicturesGetterObservable;
+import com.jetlag.jcreator.agera.predicate.NonEmptyPictureParagraphPredicate;
+import com.jetlag.jcreator.agera.predicate.NonEmptyTextParagraphPredicate;
+import com.jetlag.jcreator.agera.updatable.ParagraphsUpdatable;
+import com.jetlag.jcreator.agera.updatable.PicturesInputUpdatable;
 import com.jetlag.jcreator.paragraph.Paragraph;
-import com.jetlag.jcreator.paragraph.PictureParagraph;
-import com.jetlag.jcreator.paragraph.TextParagraph;
+import com.jetlag.jcreator.paragraph.picture.PictureParagraph;
+import com.jetlag.jcreator.paragraph.text.TextParagraph;
 import com.jetlag.jcreator.pictures.GalleryPicturesSupplier;
 import com.jetlag.jcreator.pictures.Picture;
-import com.jetlag.jcreator.updatable.ParagraphsUpdatable;
-import com.jetlag.jcreator.updatable.PicturesInputUpdatable;
 
 import java.util.ArrayList;
 
@@ -64,20 +65,9 @@ public class ChatStoryPresenter implements ChatStoryActions {
         .observe(nextTextParagraphRepo)
         .onUpdatesPerLoop()
         .getFrom(nextTextParagraphRepo)
-        .check(new Predicate<TextParagraph>() {
-          @Override
-          public boolean apply(@NonNull TextParagraph value) {
-            return !value.getText().isEmpty();
-          }
-        })
+        .check(new NonEmptyTextParagraphPredicate())
         .orSkip()
-        .transform(new Function<TextParagraph, Paragraph>() {
-          @NonNull
-          @Override
-          public Paragraph apply(@NonNull TextParagraph input) {
-            return input;
-          }
-        })
+        .transform(new TextParagraphCaster())
         .thenMergeIn(paragraphsRepo, new ParagraphListMerger())
         .compile();
   }
@@ -87,20 +77,9 @@ public class ChatStoryPresenter implements ChatStoryActions {
         .observe(nextPictureParagraphRepo)
         .onUpdatesPerLoop()
         .getFrom(nextPictureParagraphRepo)
-        .check(new Predicate<PictureParagraph>() {
-          @Override
-          public boolean apply(@NonNull PictureParagraph value) {
-            return !value.getPictures().isEmpty();
-          }
-        })
+        .check(new NonEmptyPictureParagraphPredicate())
         .orSkip()
-        .transform(new Function<PictureParagraph, Paragraph>() {
-          @NonNull
-          @Override
-          public Paragraph apply(@NonNull PictureParagraph input) {
-            return input;
-          }
-        })
+        .transform(new PictureParagraphCaster())
         .thenMergeIn(paragraphsRepo, new ParagraphListMerger())
         .compile();
   }

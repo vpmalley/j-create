@@ -1,7 +1,9 @@
-package com.jetlag.jcreator.paragraph;
+package com.jetlag.jcreator.paragraph.picture;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.jetlag.jcreator.paragraph.ParagraphViewHolder;
 
 /**
  * Created by vince on 28/08/16.

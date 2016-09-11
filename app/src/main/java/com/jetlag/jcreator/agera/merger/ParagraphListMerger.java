@@ -1,4 +1,4 @@
-package com.jetlag.jcreator.merger;
+package com.jetlag.jcreator.agera.merger;
 
 import android.support.annotation.NonNull;
 

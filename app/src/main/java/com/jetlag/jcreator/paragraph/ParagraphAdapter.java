@@ -4,6 +4,13 @@ import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
+import com.jetlag.jcreator.paragraph.picture.PictureParagraph;
+import com.jetlag.jcreator.paragraph.picture.PictureParagraphAdapter;
+import com.jetlag.jcreator.paragraph.picture.PictureParagraphViewHolder;
+import com.jetlag.jcreator.paragraph.text.TextParagraph;
+import com.jetlag.jcreator.paragraph.text.TextParagraphAdapter;
+import com.jetlag.jcreator.paragraph.text.TextParagraphViewHolder;
+
 import java.util.List;
 
 /**

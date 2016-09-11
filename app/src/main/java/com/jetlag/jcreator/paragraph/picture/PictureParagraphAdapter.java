@@ -1,4 +1,4 @@
-package com.jetlag.jcreator.paragraph;
+package com.jetlag.jcreator.paragraph.picture;
 
 import android.app.Activity;
 import android.support.v7.widget.LinearLayoutManager;

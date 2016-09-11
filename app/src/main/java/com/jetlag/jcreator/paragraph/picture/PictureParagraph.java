@@ -1,5 +1,6 @@
-package com.jetlag.jcreator.paragraph;
+package com.jetlag.jcreator.paragraph.picture;
 
+import com.jetlag.jcreator.paragraph.Paragraph;
 import com.jetlag.jcreator.pictures.Picture;
 
 import java.util.List;

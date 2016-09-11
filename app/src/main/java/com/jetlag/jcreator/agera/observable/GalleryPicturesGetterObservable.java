@@ -1,4 +1,4 @@
-package com.jetlag.jcreator.observable;
+package com.jetlag.jcreator.agera.observable;
 
 import com.google.android.agera.BaseObservable;
 

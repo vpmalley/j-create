@@ -1,4 +1,6 @@
-package com.jetlag.jcreator.paragraph;
+package com.jetlag.jcreator.paragraph.text;
+
+import com.jetlag.jcreator.paragraph.Paragraph;
 
 /**
  * Created by vince on 09/09/16.
