@@ -17,8 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jetlag.jcreator.R;
+import com.jetlag.jcreator.paragraph.Paragraph;
 import com.jetlag.jcreator.paragraph.ParagraphAdapter;
-import com.jetlag.jcreator.paragraph.TextParagraph;
 import com.jetlag.jcreator.permission.PermissionChecker;
 import com.jetlag.jcreator.pictures.Picture;
 import com.jetlag.jcreator.pictures.PictureAdapter;
@@ -111,7 +111,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
 
   private void initParagraphs() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-    paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, new ArrayList<TextParagraph>()));
+    paragraphs.setAdapter(new ParagraphAdapter(this, R.layout.paragraph_cell, new ArrayList<Paragraph>()));
     paragraphs.setLayoutManager(layoutManager);
   }
 
@@ -170,7 +170,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
    * display data
    */
 
-  public void displayParagraphs(List<TextParagraph> newParagraphs) {
+  public void displayParagraphs(List<Paragraph> newParagraphs) {
     ((ParagraphAdapter) paragraphs.getAdapter()).setParagraphs(newParagraphs);
     paragraphs.getAdapter().notifyDataSetChanged();
     paragraphs.smoothScrollToPosition(newParagraphs.size() - 1);
