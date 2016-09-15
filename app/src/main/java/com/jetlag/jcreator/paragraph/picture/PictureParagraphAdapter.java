@@ -33,7 +33,7 @@ public class PictureParagraphAdapter {
   public void onBindViewHolder(PictureParagraphViewHolder holder, PictureParagraph paragraph) {
     RecyclerView picturesView = holder.getPicturesView();
     LinearLayoutManager layoutManager = new LinearLayoutManager(picturesView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-    picturesView.setAdapter(new PictureAdapter(activity, R.layout.picture_thumbnail_cell, paragraph.getPictures(), true));
+    picturesView.setAdapter(new PictureAdapter(activity, R.layout.picture_thumbnail_cell, paragraph.getPictures(), false));
     picturesView.setLayoutManager(layoutManager);
   }
 
