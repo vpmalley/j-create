@@ -54,7 +54,6 @@ public class ChatStoryPresenter implements ChatStoryActions {
     galleryPicturesRepo = Repositories.repositoryWithInitialValue(new ArrayList<Picture>())
         .observe(galleryPicturesGetterObservable)
         .onUpdatesPerLoop()
-        //.goTo(Executors.newSingleThreadExecutor())
         .thenGetFrom(new GalleryPicturesSupplier(context))
         .compile();
   }
