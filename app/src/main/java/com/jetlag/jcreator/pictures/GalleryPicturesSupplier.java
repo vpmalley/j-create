@@ -13,7 +13,7 @@ import java.util.ArrayList;
 /**
  * Created by vince on 06/09/16.
  */
-public class GalleryPicturesSupplier implements Supplier<ArrayList<Picture>> {
+public class GalleryPicturesSupplier implements Supplier<ArrayList<DevicePicture>> {
 
   private static final String[] PICTURES_PROJECTION = new String[]{
       MediaStore.Images.ImageColumns._ID,
@@ -31,14 +31,14 @@ public class GalleryPicturesSupplier implements Supplier<ArrayList<Picture>> {
 
   @NonNull
   @Override
-  public ArrayList<Picture> get() {
+  public ArrayList<DevicePicture> get() {
     final Cursor pictureCursor = context.getContentResolver()
         .query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, PICTURES_PROJECTION, null,
             null, MediaStore.Images.ImageColumns.DATE_TAKEN + " DESC limit 10");
-    ArrayList<Picture> pics = new ArrayList<>();
+    ArrayList<DevicePicture> pics = new ArrayList<>();
     Log.d("pictures", String.valueOf(pictureCursor.getCount()));
     while (pictureCursor.moveToNext()) {
-      Picture p = pictureFromCursor(pictureCursor);
+      DevicePicture p = pictureFromCursor(pictureCursor);
       pics.add(p);
       Log.d("pictures", "added pic " + p.getDescription());
     }
@@ -46,8 +46,8 @@ public class GalleryPicturesSupplier implements Supplier<ArrayList<Picture>> {
   }
 
   @NonNull
-  private Picture pictureFromCursor(Cursor cursor) {
-    Picture p = new Picture();
+  private DevicePicture pictureFromCursor(Cursor cursor) {
+    DevicePicture p = new DevicePicture();
     p.setStoreId(cursor.getString(0));
     if ((cursor.getString(2) != null) && (cursor.getString(3) != null)) {
       p.setLatitude(Double.valueOf(cursor.getString(2)));

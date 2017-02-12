@@ -18,7 +18,7 @@ public class PictureFromGalleryLoader {
   }
 
   public void getLatestPics() {
-    List<Picture> pics = galleryPicturesSupplier.get();
+    List<DevicePicture> pics = galleryPicturesSupplier.get();
     pictureLoadedListener.onPicturesWithLocationLoaded(pics);
   }
 

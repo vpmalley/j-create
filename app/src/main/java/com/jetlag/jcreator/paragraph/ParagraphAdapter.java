@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
-import com.jetlag.jcreator.paragraph.picture.PictureParagraph;
+import com.jetlag.jcreator.paragraph.picture.DevicePictureParagraph;
 import com.jetlag.jcreator.paragraph.picture.PictureParagraphAdapter;
 import com.jetlag.jcreator.paragraph.picture.PictureParagraphViewHolder;
 import com.jetlag.jcreator.paragraph.text.TextParagraph;
@@ -54,7 +54,7 @@ public class ParagraphAdapter extends RecyclerView.Adapter<ParagraphViewHolder> 
   public void onBindViewHolder(ParagraphViewHolder holder, int position) {
     switch (getItemViewType(position)) {
       case TYPE_PICTURE:
-        pictureParagraphAdapter.onBindViewHolder((PictureParagraphViewHolder) holder, (PictureParagraph) paragraphs.get(position));
+        pictureParagraphAdapter.onBindViewHolder((PictureParagraphViewHolder) holder, (DevicePictureParagraph) paragraphs.get(position));
         break;
       case TYPE_TEXT:
       default:
@@ -73,7 +73,7 @@ public class ParagraphAdapter extends RecyclerView.Adapter<ParagraphViewHolder> 
     Paragraph p = paragraphs.get(position);
     if (p instanceof TextParagraph) {
       return TYPE_TEXT;
-    } else if (p instanceof PictureParagraph) {
+    } else if (p instanceof DevicePictureParagraph) {
       return TYPE_PICTURE;
     } else {
       return TYPE_UNKNOWN;

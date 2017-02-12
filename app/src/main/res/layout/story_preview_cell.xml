@@ -13,7 +13,7 @@
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/pictures"
+            android:id="@+id/devicePictures"
             android:layout_width="match_parent"
             android:layout_height="100dp"
             android:layout_alignParentTop="true"
@@ -23,7 +23,7 @@
             android:id="@+id/story"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/pictures"
+            android:layout_below="@id/devicePictures"
             android:layout_alignParentBottom="true"
             />
 

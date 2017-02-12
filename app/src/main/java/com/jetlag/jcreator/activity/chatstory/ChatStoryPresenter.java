@@ -14,10 +14,10 @@ import com.jetlag.jcreator.agera.predicate.NonEmptyTextParagraphPredicate;
 import com.jetlag.jcreator.agera.updatable.ParagraphsUpdatable;
 import com.jetlag.jcreator.agera.updatable.PicturesInputUpdatable;
 import com.jetlag.jcreator.paragraph.Paragraph;
-import com.jetlag.jcreator.paragraph.picture.PictureParagraph;
+import com.jetlag.jcreator.paragraph.picture.DevicePictureParagraph;
 import com.jetlag.jcreator.paragraph.text.TextParagraph;
+import com.jetlag.jcreator.pictures.DevicePicture;
 import com.jetlag.jcreator.pictures.GalleryPicturesSupplier;
-import com.jetlag.jcreator.pictures.Picture;
 
 import java.util.ArrayList;
 
@@ -30,11 +30,11 @@ public class ChatStoryPresenter implements ChatStoryActions {
   private ParagraphsUpdatable paragraphsUpdatable;
   private Repository<ArrayList<Paragraph>> textParagraphsRepo;
   private final Context context;
-  private Repository<ArrayList<Picture>> galleryPicturesRepo;
+  private Repository<ArrayList<DevicePicture>> galleryPicturesRepo;
   private GalleryPicturesGetterObservable galleryPicturesGetterObservable;
   private PicturesInputUpdatable picturesInputUpdatable;
   private MutableRepository<ArrayList<Paragraph>> paragraphsRepo;
-  private MutableRepository<PictureParagraph> nextPictureParagraphRepo;
+  private MutableRepository<DevicePictureParagraph> nextPictureParagraphRepo;
   private Repository<ArrayList<Paragraph>> picturesParagraphsRepo;
 
   public ChatStoryPresenter(Context context) {
@@ -43,7 +43,7 @@ public class ChatStoryPresenter implements ChatStoryActions {
 
   public void createRepos() {
     nextTextParagraphRepo = Repositories.mutableRepository(new TextParagraph(""));
-    nextPictureParagraphRepo = Repositories.mutableRepository(new PictureParagraph(new ArrayList<Picture>()));
+    nextPictureParagraphRepo = Repositories.mutableRepository(new DevicePictureParagraph(new ArrayList<DevicePicture>()));
     createNextGalleryPicturesParagraphRepo();
     createTextParagraphsRepo();
     createPicturesParagraphsRepo();
@@ -51,7 +51,7 @@ public class ChatStoryPresenter implements ChatStoryActions {
 
   private void createNextGalleryPicturesParagraphRepo() {
     galleryPicturesGetterObservable = new GalleryPicturesGetterObservable();
-    galleryPicturesRepo = Repositories.repositoryWithInitialValue(new ArrayList<Picture>())
+    galleryPicturesRepo = Repositories.repositoryWithInitialValue(new ArrayList<DevicePicture>())
         .observe(galleryPicturesGetterObservable)
         .onUpdatesPerLoop()
         .thenGetFrom(new GalleryPicturesSupplier(context))
@@ -87,8 +87,8 @@ public class ChatStoryPresenter implements ChatStoryActions {
     nextTextParagraphRepo.accept(new TextParagraph(newParagraph));
   }
 
-  public void addPictureParagraph(ArrayList<Picture> newPictures) {
-    nextPictureParagraphRepo.accept(new PictureParagraph(newPictures));
+  public void addPictureParagraph(ArrayList<DevicePicture> newPictures) {
+    nextPictureParagraphRepo.accept(new DevicePictureParagraph(newPictures));
   }
 
   public void bindUpdatables(ChatStoryDisplay chatStoryDisplay) {

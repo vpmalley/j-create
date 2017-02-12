@@ -6,7 +6,7 @@ import android.provider.MediaStore;
 /**
  * Created by vince on 17/04/16.
  */
-public class Picture {
+public class DevicePicture {
 
   private String storeId;
   private double latitude;

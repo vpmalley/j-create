@@ -7,5 +7,5 @@ import java.util.List;
  */
 public interface PictureLoadedListener {
 
-  void onPicturesWithLocationLoaded(List<Picture> pictures);
+  void onPicturesWithLocationLoaded(List<DevicePicture> pictures);
 }

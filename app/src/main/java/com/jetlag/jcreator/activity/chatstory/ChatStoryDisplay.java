@@ -1,7 +1,7 @@
 package com.jetlag.jcreator.activity.chatstory;
 
 import com.jetlag.jcreator.paragraph.Paragraph;
-import com.jetlag.jcreator.pictures.Picture;
+import com.jetlag.jcreator.pictures.DevicePicture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,5 +13,5 @@ public interface ChatStoryDisplay {
 
   void displayParagraphs(List<Paragraph> newParagraphs);
 
-  void displayPictures(ArrayList<Picture> pictures);
+  void displayPictures(ArrayList<DevicePicture> pictures);
 }

@@ -3,7 +3,7 @@ package com.jetlag.jcreator.agera.updatable;
 import com.google.android.agera.Repository;
 import com.google.android.agera.Updatable;
 import com.jetlag.jcreator.activity.chatstory.ChatStoryDisplay;
-import com.jetlag.jcreator.pictures.Picture;
+import com.jetlag.jcreator.pictures.DevicePicture;
 
 import java.util.ArrayList;
 
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 public class PicturesInputUpdatable implements Updatable {
 
   private final ChatStoryDisplay chatStoryDisplay;
-  private final Repository<ArrayList<Picture>> picturesRepo;
+  private final Repository<ArrayList<DevicePicture>> picturesRepo;
 
-  public PicturesInputUpdatable(ChatStoryDisplay chatStoryDisplay, Repository<ArrayList<Picture>> picturesRepo) {
+  public PicturesInputUpdatable(ChatStoryDisplay chatStoryDisplay, Repository<ArrayList<DevicePicture>> picturesRepo) {
     this.chatStoryDisplay = chatStoryDisplay;
     this.picturesRepo = picturesRepo;
   }

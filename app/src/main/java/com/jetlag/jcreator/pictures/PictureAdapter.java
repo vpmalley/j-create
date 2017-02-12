@@ -23,25 +23,25 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
 
   private final int resource;
 
-  private List<Picture> pictures;
+  private List<DevicePicture> devicePictures;
 
   private final boolean clickablePics;
 
-  public PictureAdapter(Activity activity, int resource, List<Picture> objects, boolean clickablePics) {
+  public PictureAdapter(Activity activity, int resource, List<DevicePicture> objects, boolean clickablePics) {
     super();
     this.activity = activity;
     this.resource = resource;
-    this.pictures = objects;
+    this.devicePictures = objects;
     this.clickablePics = clickablePics;
   }
 
-  public void setPictures(List<Picture> pictures) {
-    this.pictures = pictures;
+  public void setDevicePictures(List<DevicePicture> devicePictures) {
+    this.devicePictures = devicePictures;
   }
 
-  public ArrayList<Picture> getPickedPictures() {
-    ArrayList<Picture> pickedPictures = new ArrayList<>();
-    for (Picture p : pictures) {
+  public ArrayList<DevicePicture> getPickedPictures() {
+    ArrayList<DevicePicture> pickedPictures = new ArrayList<>();
+    for (DevicePicture p : devicePictures) {
       if (p.isPicked()) {
         pickedPictures.add(p);
       }
@@ -50,7 +50,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
   }
 
   public void resetPickedPictures() {
-    for (Picture p : pictures) {
+    for (DevicePicture p : devicePictures) {
       p.setPicked(false);
     }
   }
@@ -65,7 +65,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
 
   @Override
   public void onBindViewHolder(PictureViewHolder pictureHolder, int position) {
-    Picture p = pictures.get(position);
+    DevicePicture p = devicePictures.get(position);
     ImageView pictureView = pictureHolder.getPictureView();
     Glide
         .with(activity)
@@ -84,7 +84,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
 
   @Override
   public int getItemCount() {
-    return pictures.size();
+    return devicePictures.size();
   }
 
   public class OnPictureClickListener implements View.OnClickListener {
@@ -97,7 +97,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
 
     @Override
     public void onClick(View view) {
-      Picture picture = getPicture();
+      DevicePicture picture = getPicture();
       picture.setPicked(!picture.isPicked());
       if (picture.isPicked()) {
         view.setBackgroundColor(view.getResources().getColor(android.R.color.holo_blue_dark));
@@ -106,9 +106,9 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
       }
     }
 
-    private Picture getPicture() {
+    private DevicePicture getPicture() {
       int adapterPosition = pictureViewHolder.getAdapterPosition();
-      return PictureAdapter.this.pictures.get(adapterPosition);
+      return PictureAdapter.this.devicePictures.get(adapterPosition);
     }
   }
 }

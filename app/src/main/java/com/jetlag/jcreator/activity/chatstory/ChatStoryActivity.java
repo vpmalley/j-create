@@ -20,7 +20,7 @@ import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.paragraph.Paragraph;
 import com.jetlag.jcreator.paragraph.ParagraphAdapter;
 import com.jetlag.jcreator.permission.PermissionChecker;
-import com.jetlag.jcreator.pictures.Picture;
+import com.jetlag.jcreator.pictures.DevicePicture;
 import com.jetlag.jcreator.pictures.PictureAdapter;
 
 import java.util.ArrayList;
@@ -117,7 +117,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
 
   private void initPictures() {
     LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-    nextPictures.setAdapter(new PictureAdapter(this, R.layout.picture_thumbnail_cell, new ArrayList<Picture>(), true));
+    nextPictures.setAdapter(new PictureAdapter(this, R.layout.picture_thumbnail_cell, new ArrayList<DevicePicture>(), true));
     nextPictures.setLayoutManager(layoutManager);
   }
 
@@ -147,7 +147,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
       @Override
       public void onClick(View view) {
         PictureAdapter nextPicturesAdapter = (PictureAdapter) nextPictures.getAdapter();
-        ArrayList<Picture> pickedPictures = nextPicturesAdapter.getPickedPictures();
+        ArrayList<DevicePicture> pickedPictures = nextPicturesAdapter.getPickedPictures();
         chatStoryPresenter.addPictureParagraph(pickedPictures);
         nextPicturesAdapter.resetPickedPictures();
         nextPicturesAdapter.notifyDataSetChanged();
@@ -193,8 +193,8 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
   }
 
   @Override
-  public void displayPictures(ArrayList<Picture> pictures) {
-    ((PictureAdapter) nextPictures.getAdapter()).setPictures(pictures);
+  public void displayPictures(ArrayList<DevicePicture> pictures) {
+    ((PictureAdapter) nextPictures.getAdapter()).setDevicePictures(pictures);
     nextPictures.getAdapter().notifyDataSetChanged();
   }
 
