@@ -29,6 +29,9 @@ proguard/
 .navigation/
 .idea
 
+# api keys
+api_keys.xml
+
 *~
 
 # Android Studio captures folder

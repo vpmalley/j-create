@@ -8,4 +8,7 @@
     <string name="next_paragraph_hint">What gem did you discover this morning ?</string>
     <string name="input_content_text">TEXT</string>
     <string name="input_content_picture">PICTURES</string>
+    <string name="type_flickr_code">Type code from Flickr</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
 </resources>
