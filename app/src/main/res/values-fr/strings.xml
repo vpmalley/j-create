@@ -5,4 +5,5 @@
     <string name="next_paragraph_hint">Qu\'as-tu découvert ce matin ?</string>
     <string name="input_content_text">TEXTE</string>
     <string name="input_content_picture">PHOTOS</string>
+    <string name="action_publish">Publier</string>
 </resources>

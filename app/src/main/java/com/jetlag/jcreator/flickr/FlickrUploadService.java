@@ -29,7 +29,7 @@ public class FlickrUploadService extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
         DevicePicture pictureToUpload = intent.getParcelableExtra(EXTRA_DEVICE_PICTURE);
-        FlickrJPicturesUploader uploader = getUploader();
+        FlickrPicturesUploader uploader = getUploader();
 
         List<String> ticketIds = uploader.uploadPicture(pictureToUpload);
 

@@ -16,6 +16,8 @@ public class DevicePicture implements Parcelable {
   private String description;
   private boolean picked;
 
+  public DevicePicture() {}
+
   public String getStoreId() {
     return storeId;
   }

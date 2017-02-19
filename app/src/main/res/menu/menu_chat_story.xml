@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.jetlag.jcreator.activity.chatstory.ChatStoryActivity">
     <item
+        android:id="@+id/action_publish"
+        android:icon="@android:drawable/ic_menu_save"
+        android:orderInCategory="90"
+        android:title="@string/action_publish"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings"

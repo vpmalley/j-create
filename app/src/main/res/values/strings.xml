@@ -11,4 +11,5 @@
     <string name="type_flickr_code">Type code from Flickr</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="action_publish">Publish</string>
 </resources>

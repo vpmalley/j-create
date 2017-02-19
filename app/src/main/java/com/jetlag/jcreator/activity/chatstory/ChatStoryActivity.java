@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -54,14 +56,33 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_chat_story);
-    setSupportActionBar(toolbar);
 
     findAllViews();
+    setSupportActionBar(toolbar);
     setupFab();
     bindActions();
     initParagraphs();
     initPictures();
     new PermissionChecker().checkPermission(this, PERM_READ_PICS, REQ_READ_PICS, "Allow to add pictures from your device?");
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_chat_story, menu);
+    return true;
+  }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    int id = item.getItemId();
+
+    if (id == R.id.action_publish) {
+      // TODO
+
+      return true;
+    }
+
+    return super.onOptionsItemSelected(item);
   }
 
   @Override
