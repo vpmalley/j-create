@@ -20,4 +20,6 @@ public interface ChatStoryActions {
   void unbindUpdatables();
 
   void getLatestPicturesOnDevice();
+
+  void uploadPictures();
 }

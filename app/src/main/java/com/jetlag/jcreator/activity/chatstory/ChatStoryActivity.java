@@ -1,15 +1,18 @@
 package com.jetlag.jcreator.activity.chatstory;
 
 import android.Manifest;
+import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,8 +20,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.jetlag.jcreator.R;
+import com.jetlag.jcreator.flickr.FlickrUploadService;
+import com.jetlag.jcreator.flickr.FlickrUploadStateReceiver;
 import com.jetlag.jcreator.paragraph.Paragraph;
 import com.jetlag.jcreator.paragraph.ParagraphAdapter;
 import com.jetlag.jcreator.permission.PermissionChecker;
@@ -28,7 +34,7 @@ import com.jetlag.jcreator.pictures.PictureAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDisplay {
+public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDisplay, FlickrUploadStateReceiver.UploadEndListener {
 
 
   public static final int REQ_READ_PICS = 101;
@@ -63,6 +69,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     bindActions();
     initParagraphs();
     initPictures();
+    initStateReceiver();
     new PermissionChecker().checkPermission(this, PERM_READ_PICS, REQ_READ_PICS, "Allow to add pictures from your device?");
   }
 
@@ -77,8 +84,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     int id = item.getItemId();
 
     if (id == R.id.action_publish) {
-      // TODO
-
+      chatStoryPresenter.uploadPictures();
       return true;
     }
 
@@ -140,6 +146,20 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
     nextPictures.setAdapter(new PictureAdapter(this, R.layout.picture_thumbnail_cell, new ArrayList<DevicePicture>(), true));
     nextPictures.setLayoutManager(layoutManager);
+  }
+
+  private void initStateReceiver() {
+    IntentFilter uploadEndIntentFilter = new IntentFilter(
+            FlickrUploadService.INTENT_FLICKR_UPLOAD_END);
+    FlickrUploadStateReceiver flickrUploadStateReceiver = new FlickrUploadStateReceiver();
+    flickrUploadStateReceiver.registerListener(this);
+    LocalBroadcastManager.getInstance(this).registerReceiver(flickrUploadStateReceiver, uploadEndIntentFilter);
+  }
+
+  @Override
+  public void onUploadEnd(String photoId) {
+    Toast.makeText(this, "picture uploaded: " + photoId, Toast.LENGTH_SHORT).show();
+    Log.d("upload", "picture uploaded: " + photoId);
   }
 
   /**

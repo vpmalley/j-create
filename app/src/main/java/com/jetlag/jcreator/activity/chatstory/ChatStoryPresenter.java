@@ -1,6 +1,7 @@
 package com.jetlag.jcreator.activity.chatstory;
 
 import android.content.Context;
+import android.content.Intent;
 
 import com.google.android.agera.MutableRepository;
 import com.google.android.agera.Repositories;
@@ -13,6 +14,7 @@ import com.jetlag.jcreator.agera.predicate.NonEmptyPictureParagraphPredicate;
 import com.jetlag.jcreator.agera.predicate.NonEmptyTextParagraphPredicate;
 import com.jetlag.jcreator.agera.updatable.ParagraphsUpdatable;
 import com.jetlag.jcreator.agera.updatable.PicturesInputUpdatable;
+import com.jetlag.jcreator.flickr.FlickrUploadService;
 import com.jetlag.jcreator.paragraph.Paragraph;
 import com.jetlag.jcreator.paragraph.picture.DevicePictureParagraph;
 import com.jetlag.jcreator.paragraph.text.TextParagraph;
@@ -111,4 +113,16 @@ public class ChatStoryPresenter implements ChatStoryActions {
     galleryPicturesGetterObservable.retrievePics();
   }
 
+  @Override
+  public void uploadPictures() {
+    for (Paragraph paragraph : picturesParagraphsRepo.get()) {
+      if (paragraph instanceof DevicePictureParagraph) {
+        for (DevicePicture devicePicture : ((DevicePictureParagraph) paragraph).getDevicePictures()) {
+          Intent uploadIntent = new Intent(context, FlickrUploadService.class);
+          uploadIntent.putExtra(FlickrUploadService.EXTRA_DEVICE_PICTURE, devicePicture);
+          context.startService(uploadIntent);
+        }
+      }
+    }
+  }
 }
