@@ -89,15 +89,6 @@ public class FlickrJPicturesUploader implements FlickrPicturesUploader {
     return photoIds;
   }
 
-  private List<UploadedPicture> retrievePictures(List<String> photoIds) {
-    List<UploadedPicture> uploadedPics = new ArrayList<>();
-    for (String photoId : photoIds) {
-      Photo p = picturesProvider.getPhotoForId(photoId);
-      uploadedPics.add(new UploadedPicture(p));
-    }
-    return uploadedPics;
-  }
-
   private List<UploadedPicture> requestPictureInformation(List<String> ticketIds) {
     List<UploadedPicture> pictures = new ArrayList<>();
     RequestContext requestContext = RequestContext.getRequestContext();

@@ -1,5 +1,6 @@
 package com.jetlag.jcreator.activity.chatstory;
 
+import com.jetlag.jcreator.flickr.FlickrPictureInfoReceiver;
 import com.jetlag.jcreator.flickr.FlickrUploadStateReceiver;
 import com.jetlag.jcreator.pictures.DevicePicture;
 
@@ -8,7 +9,8 @@ import java.util.ArrayList;
 /**
  * Created by vince on 31/08/16.
  */
-public interface ChatStoryActions extends FlickrUploadStateReceiver.UploadEndListener {
+public interface ChatStoryActions extends FlickrUploadStateReceiver.UploadEndListener,
+        FlickrPictureInfoReceiver.PictureInfoListener {
 
   void createRepos();
 

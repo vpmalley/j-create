@@ -42,6 +42,7 @@ public class FlickrJPicturesProvider implements FlickrProvider {
     return photos;
   }
 
+  @Override
   public Photo getPhotoForId(String photoId) {
     Photo photo = null;
     Flickr f = new Flickr(context.getResources().getString(R.string.flickr_api_key));

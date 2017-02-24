@@ -16,12 +16,14 @@ import com.jetlag.jcreator.agera.predicate.NonEmptyPictureParagraphPredicate;
 import com.jetlag.jcreator.agera.predicate.NonEmptyTextParagraphPredicate;
 import com.jetlag.jcreator.agera.updatable.ParagraphsUpdatable;
 import com.jetlag.jcreator.agera.updatable.PicturesInputUpdatable;
+import com.jetlag.jcreator.flickr.FlickrPictureInfoService;
 import com.jetlag.jcreator.flickr.FlickrUploadService;
 import com.jetlag.jcreator.paragraph.Paragraph;
 import com.jetlag.jcreator.paragraph.picture.DevicePictureParagraph;
 import com.jetlag.jcreator.paragraph.text.TextParagraph;
 import com.jetlag.jcreator.pictures.DevicePicture;
 import com.jetlag.jcreator.pictures.GalleryPicturesSupplier;
+import com.jetlag.jcreator.pictures.UploadedPicture;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +45,7 @@ public class ChatStoryPresenter implements ChatStoryActions {
   private Repository<ArrayList<Paragraph>> picturesParagraphsRepo;
 
   private List<String> uploadingPhotoIds = new ArrayList<>();
+  private List<UploadedPicture> uploadedPictures = new ArrayList<>();
 
   public ChatStoryPresenter(Context context) {
     this.context = context;
@@ -136,5 +139,15 @@ public class ChatStoryPresenter implements ChatStoryActions {
     Toast.makeText(context, "picture uploaded: " + photoId, Toast.LENGTH_SHORT).show();
     Log.d("upload", "picture uploaded: " + photoId);
     uploadingPhotoIds.add(photoId);
+    Intent pictureInfoIntent = new Intent(context, FlickrPictureInfoService.class);
+    pictureInfoIntent.putExtra(FlickrPictureInfoService.EXTRA_PHOTO_ID, photoId);
+    context.startService(pictureInfoIntent);
+  }
+
+  @Override
+  public void onPictureInfoReceived(UploadedPicture uploadedPicture) {
+    Toast.makeText(context, "picture uploaded: " + uploadedPicture.getUrl(), Toast.LENGTH_SHORT).show();
+    Log.d("upload", "picture uploaded: " + uploadedPicture.getUrl());
+    uploadedPictures.add(uploadedPicture);
   }
 }

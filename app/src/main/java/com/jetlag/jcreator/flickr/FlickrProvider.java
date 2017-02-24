@@ -1,5 +1,6 @@
 package com.jetlag.jcreator.flickr;
 
+import com.googlecode.flickrjandroid.photos.Photo;
 import com.googlecode.flickrjandroid.photos.PhotoList;
 
 /**
@@ -17,4 +18,6 @@ public interface FlickrProvider {
    * @return the List of photos
    */
   PhotoList getUserPhotos(String username, int count);
+
+  Photo getPhotoForId(String photoId);
 }

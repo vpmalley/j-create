@@ -1,6 +1,7 @@
 package com.jetlag.jcreator.activity.chatstory;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -21,6 +22,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jetlag.jcreator.R;
+import com.jetlag.jcreator.flickr.FlickrPictureInfoReceiver;
+import com.jetlag.jcreator.flickr.FlickrPictureInfoService;
 import com.jetlag.jcreator.flickr.FlickrUploadService;
 import com.jetlag.jcreator.flickr.FlickrUploadStateReceiver;
 import com.jetlag.jcreator.paragraph.Paragraph;
@@ -52,6 +55,8 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
 
   private ChatStoryActions chatStoryPresenter;
 
+  private List<BroadcastReceiver> registeredReceivers;
+
   /**
    * lifecycle
    */
@@ -67,7 +72,6 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     bindActions();
     initParagraphs();
     initPictures();
-    initStateReceiver();
     new PermissionChecker().checkPermission(this, PERM_READ_PICS, REQ_READ_PICS, "Allow to add pictures from your device?");
   }
 
@@ -95,12 +99,14 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     chatStoryPresenter = new ChatStoryPresenter(this);
     chatStoryPresenter.createRepos();
     chatStoryPresenter.bindUpdatables(this);
+    registerReceivers();
   }
 
   @Override
   protected void onStop() {
     super.onStop();
     chatStoryPresenter.unbindUpdatables();
+    unregisterReceivers();
   }
 
   private FloatingActionButton findAllViews() {
@@ -146,12 +152,34 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     nextPictures.setLayoutManager(layoutManager);
   }
 
-  private void initStateReceiver() {
+  private void registerReceivers() {
+    registeredReceivers = new ArrayList<>();
+    registerUploadStateReceiver();
+    registerPictureInfoReceiver();
+  }
+
+  private void registerUploadStateReceiver() {
     IntentFilter uploadEndIntentFilter = new IntentFilter(
             FlickrUploadService.INTENT_FLICKR_UPLOAD_END);
     FlickrUploadStateReceiver flickrUploadStateReceiver = new FlickrUploadStateReceiver();
+    registeredReceivers.add(flickrUploadStateReceiver);
     flickrUploadStateReceiver.registerListener(chatStoryPresenter);
     LocalBroadcastManager.getInstance(this).registerReceiver(flickrUploadStateReceiver, uploadEndIntentFilter);
+  }
+
+  private void registerPictureInfoReceiver() {
+    IntentFilter pictureInfoIntentFilter = new IntentFilter(
+            FlickrPictureInfoService.INTENT_FLICKR_PICTURE_INFO_END);
+    FlickrPictureInfoReceiver flickrPictureInfoReceiver = new FlickrPictureInfoReceiver();
+    registeredReceivers.add(flickrPictureInfoReceiver);
+    flickrPictureInfoReceiver.registerListener(chatStoryPresenter);
+    LocalBroadcastManager.getInstance(this).registerReceiver(flickrPictureInfoReceiver, pictureInfoIntentFilter);
+  }
+
+  private void unregisterReceivers() {
+    for (BroadcastReceiver broadcastReceiver: registeredReceivers) {
+      LocalBroadcastManager.getInstance(this).unregisterReceiver(broadcastReceiver);
+    }
   }
 
   /**
