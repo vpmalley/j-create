@@ -27,7 +27,7 @@ public class FlickrUploadStateReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         if (listener != null) {
-            listener.onUploadEnd(intent.getStringExtra(FlickrUploadService.EXTRA_TICKET_ID));
+            listener.onUploadEnd(intent.getStringExtra(FlickrUploadService.EXTRA_PHOTO_ID));
         }
     }
 }

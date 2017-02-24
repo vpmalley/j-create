@@ -18,7 +18,7 @@ public class FlickrUploadService extends IntentService {
 
     public static final String EXTRA_DEVICE_PICTURE = "devicePicture";
     public static final String INTENT_FLICKR_UPLOAD_END = "com.jetlag.jcreator.FLICKR_UPLOAD_END";
-    public static final String EXTRA_TICKET_ID = "com.jetlag.jcreator.TICKET_ID";
+    public static final String EXTRA_PHOTO_ID = "com.jetlag.jcreator.PHOTO_ID";
 
     private static final String FLICKR_UPLOAD_SERVICE = "FlickrUploadService";
 
@@ -31,11 +31,11 @@ public class FlickrUploadService extends IntentService {
         DevicePicture pictureToUpload = intent.getParcelableExtra(EXTRA_DEVICE_PICTURE);
         FlickrPicturesUploader uploader = getUploader();
 
-        List<String> ticketIds = uploader.uploadPicture(pictureToUpload);
+        List<String> photoIds = uploader.uploadPicture(pictureToUpload);
 
         Intent uploadEndLocalIntent =
                 new Intent(INTENT_FLICKR_UPLOAD_END)
-                        .putExtra(EXTRA_TICKET_ID, ticketIds.get(0));
+                        .putExtra(EXTRA_PHOTO_ID, photoIds.get(0));
         LocalBroadcastManager.getInstance(this).sendBroadcast(uploadEndLocalIntent);
     }
 

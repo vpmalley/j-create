@@ -51,7 +51,6 @@ public class FlickrJPicturesUploader implements FlickrPicturesUploader {
 
   @Override
   public List<String> uploadPicture(DevicePicture picture) {
-    UploadedPicture uploaded = null;
     List<DevicePicture> pictures = new ArrayList<>(1);
     pictures.add(picture);
     return requestUpload(pictures);
@@ -64,30 +63,30 @@ public class FlickrJPicturesUploader implements FlickrPicturesUploader {
 
     requestContext.setOAuth(oauth);
     Uploader uploader = new Uploader(context.getString(R.string.flickr_api_key), context.getString(R.string.flickr_api_secret));
-    List<String> ticketIds = new ArrayList<>();
+    List<String> photoIds = new ArrayList<>();
     for (DevicePicture pic : pictures) {
-        InputStream picStream = null;
-        try {
-          picStream = context.getContentResolver().openInputStream(pic.getUri());
-        } catch (FileNotFoundException e) {
-          Log.w("inputStream", "failed opening the stream for picture to upload. " + e.toString());
-        }
+      InputStream picStream = null;
+      try {
+        picStream = context.getContentResolver().openInputStream(pic.getUri());
+      } catch (FileNotFoundException e) {
+        Log.w("inputStream", "failed opening the stream for picture to upload. " + e.toString());
+      }
 
-        UploadMetaData uploadMetaData = new UploadMetaData();
-        uploadMetaData.setAsync(true);
-        uploadMetaData.setTitle("untitled");
-        uploadMetaData.setDescription(pic.getDescription());
-        if (picStream != null) {
-          try {
-            String ticketId = uploader.upload("untitled", picStream, uploadMetaData);
-            ticketIds.add(ticketId);
-            Log.d("upload successful", "with photo id :" + ticketIds.get(ticketIds.size() - 1));
-          } catch (IOException | FlickrException | SAXException e) {
-            Log.w("inputStream", "failed uploading picture. " + e.toString());
-          }
+      UploadMetaData uploadMetaData = new UploadMetaData();
+      uploadMetaData.setAsync(false);
+      uploadMetaData.setTitle("untitled");
+      uploadMetaData.setDescription(pic.getDescription());
+      if (picStream != null) {
+        try {
+          String photoId = uploader.upload("untitled", picStream, uploadMetaData);
+          photoIds.add(photoId);
+          Log.d("upload successful", "with photo id :" + photoIds.get(photoIds.size() - 1));
+        } catch (IOException | FlickrException | SAXException e) {
+          Log.w("inputStream", "failed uploading picture. " + e.toString());
         }
+      }
     }
-    return ticketIds;
+    return photoIds;
   }
 
   private List<UploadedPicture> retrievePictures(List<String> photoIds) {
