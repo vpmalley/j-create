@@ -12,7 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,7 +19,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.jetlag.jcreator.R;
 import com.jetlag.jcreator.flickr.FlickrUploadService;
@@ -34,7 +32,7 @@ import com.jetlag.jcreator.pictures.PictureAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDisplay, FlickrUploadStateReceiver.UploadEndListener {
+public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDisplay {
 
 
   public static final int REQ_READ_PICS = 101;
@@ -126,7 +124,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
         @Override
         public void onClick(View view) {
           Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-              .setAction("Action", null).show();
+                  .setAction("Action", null).show();
         }
       });
     }
@@ -152,14 +150,8 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     IntentFilter uploadEndIntentFilter = new IntentFilter(
             FlickrUploadService.INTENT_FLICKR_UPLOAD_END);
     FlickrUploadStateReceiver flickrUploadStateReceiver = new FlickrUploadStateReceiver();
-    flickrUploadStateReceiver.registerListener(this);
+    flickrUploadStateReceiver.registerListener(chatStoryPresenter);
     LocalBroadcastManager.getInstance(this).registerReceiver(flickrUploadStateReceiver, uploadEndIntentFilter);
-  }
-
-  @Override
-  public void onUploadEnd(String photoId) {
-    Toast.makeText(this, "picture uploaded: " + photoId, Toast.LENGTH_SHORT).show();
-    Log.d("upload", "picture uploaded: " + photoId);
   }
 
   /**
@@ -248,7 +240,7 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     switch (requestCode) {
       case REQ_READ_PICS: {
         if (grantResults.length > 0
-            && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
           chatStoryPresenter.getLatestPicturesOnDevice();
         }
       }

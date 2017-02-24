@@ -2,6 +2,8 @@ package com.jetlag.jcreator.activity.chatstory;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.agera.MutableRepository;
 import com.google.android.agera.Repositories;
@@ -22,6 +24,7 @@ import com.jetlag.jcreator.pictures.DevicePicture;
 import com.jetlag.jcreator.pictures.GalleryPicturesSupplier;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vince on 31/08/16.
@@ -39,6 +42,8 @@ public class ChatStoryPresenter implements ChatStoryActions {
   private MutableRepository<DevicePictureParagraph> nextPictureParagraphRepo;
   private Repository<ArrayList<Paragraph>> picturesParagraphsRepo;
 
+  private List<String> uploadingPhotoIds = new ArrayList<>();
+
   public ChatStoryPresenter(Context context) {
     this.context = context;
   }
@@ -54,35 +59,35 @@ public class ChatStoryPresenter implements ChatStoryActions {
   private void createNextGalleryPicturesParagraphRepo() {
     galleryPicturesGetterObservable = new GalleryPicturesGetterObservable();
     galleryPicturesRepo = Repositories.repositoryWithInitialValue(new ArrayList<DevicePicture>())
-        .observe(galleryPicturesGetterObservable)
-        .onUpdatesPerLoop()
-        .thenGetFrom(new GalleryPicturesSupplier(context))
-        .compile();
+            .observe(galleryPicturesGetterObservable)
+            .onUpdatesPerLoop()
+            .thenGetFrom(new GalleryPicturesSupplier(context))
+            .compile();
   }
 
   private void createTextParagraphsRepo() {
     paragraphsRepo = Repositories.mutableRepository(new ArrayList<Paragraph>());
     textParagraphsRepo = Repositories.repositoryWithInitialValue(new ArrayList<Paragraph>())
-        .observe(nextTextParagraphRepo)
-        .onUpdatesPerLoop()
-        .getFrom(nextTextParagraphRepo)
-        .check(new NonEmptyTextParagraphPredicate())
-        .orSkip()
-        .transform(new TextParagraphCaster())
-        .thenMergeIn(paragraphsRepo, new ParagraphListMerger())
-        .compile();
+            .observe(nextTextParagraphRepo)
+            .onUpdatesPerLoop()
+            .getFrom(nextTextParagraphRepo)
+            .check(new NonEmptyTextParagraphPredicate())
+            .orSkip()
+            .transform(new TextParagraphCaster())
+            .thenMergeIn(paragraphsRepo, new ParagraphListMerger())
+            .compile();
   }
 
   private void createPicturesParagraphsRepo() {
     picturesParagraphsRepo = Repositories.repositoryWithInitialValue(new ArrayList<Paragraph>())
-        .observe(nextPictureParagraphRepo)
-        .onUpdatesPerLoop()
-        .getFrom(nextPictureParagraphRepo)
-        .check(new NonEmptyPictureParagraphPredicate())
-        .orSkip()
-        .transform(new PictureParagraphCaster())
-        .thenMergeIn(paragraphsRepo, new ParagraphListMerger())
-        .compile();
+            .observe(nextPictureParagraphRepo)
+            .onUpdatesPerLoop()
+            .getFrom(nextPictureParagraphRepo)
+            .check(new NonEmptyPictureParagraphPredicate())
+            .orSkip()
+            .transform(new PictureParagraphCaster())
+            .thenMergeIn(paragraphsRepo, new ParagraphListMerger())
+            .compile();
   }
 
   public void addTextParagraph(String newParagraph) {
@@ -124,5 +129,12 @@ public class ChatStoryPresenter implements ChatStoryActions {
         }
       }
     }
+  }
+
+  @Override
+  public void onUploadEnd(String photoId) {
+    Toast.makeText(context, "picture uploaded: " + photoId, Toast.LENGTH_SHORT).show();
+    Log.d("upload", "picture uploaded: " + photoId);
+    uploadingPhotoIds.add(photoId);
   }
 }
