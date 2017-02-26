@@ -9,7 +9,7 @@ import com.googlecode.flickrjandroid.photos.Photo;
  * Created by vince on 12/02/17.
  */
 
-public class UploadedPicture implements Parcelable {
+public class UploadedPicture implements Picture, Parcelable {
 
     private final String flickrId;
     private final String url;

@@ -8,7 +8,7 @@ import android.provider.MediaStore;
 /**
  * Created by vince on 17/04/16.
  */
-public class DevicePicture implements Parcelable {
+public class DevicePicture implements Picture, Parcelable {
 
   private String storeId;
   private double latitude;
