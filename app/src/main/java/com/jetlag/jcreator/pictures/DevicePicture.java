@@ -15,6 +15,7 @@ public class DevicePicture implements Picture, Parcelable {
   private double longitude;
   private String description;
   private boolean picked;
+  private State uploadState;
 
   public DevicePicture() {}
 
@@ -62,6 +63,11 @@ public class DevicePicture implements Picture, Parcelable {
     return picked;
   }
 
+  @Override
+  public State getState() {
+    return uploadState;
+  }
+
   /*
    * Parcelable
    */
@@ -88,6 +94,7 @@ public class DevicePicture implements Picture, Parcelable {
     longitude = in.readDouble();
     description = in.readString();
     picked = in.readInt() > 0;
+    uploadState = State.valueOf(in.readString());
   }
 
   @Override
@@ -97,6 +104,7 @@ public class DevicePicture implements Picture, Parcelable {
     parcel.writeDouble(longitude);
     parcel.writeString(description);
     parcel.writeInt(picked ? 1 : 0);
+    parcel.writeString(uploadState.name());
   }
 
 }

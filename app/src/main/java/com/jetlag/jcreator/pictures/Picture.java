@@ -12,4 +12,5 @@ public interface Picture {
         UPLOADED
     }
 
+    State getState();
 }

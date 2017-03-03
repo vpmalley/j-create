@@ -28,6 +28,11 @@ public class UploadedPicture implements Picture, Parcelable {
     }
 
     @Override
+    public State getState() {
+        return State.UPLOADED;
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
