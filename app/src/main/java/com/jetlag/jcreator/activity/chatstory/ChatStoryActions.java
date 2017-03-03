@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by vince on 31/08/16.
  */
-public interface ChatStoryActions extends FlickrUploadStateReceiver.UploadEndListener,
+interface ChatStoryActions extends FlickrUploadStateReceiver.UploadEndListener,
         FlickrPictureInfoReceiver.PictureInfoListener {
 
   void createRepos();

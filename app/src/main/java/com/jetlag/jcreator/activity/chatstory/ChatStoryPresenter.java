@@ -47,7 +47,7 @@ public class ChatStoryPresenter implements ChatStoryActions {
   private List<String> uploadingPhotoIds = new ArrayList<>();
   private List<UploadedPicture> uploadedPictures = new ArrayList<>();
 
-  public ChatStoryPresenter(Context context) {
+  ChatStoryPresenter(Context context) {
     this.context = context;
   }
 
