@@ -87,11 +87,11 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
     return devicePictures.size();
   }
 
-  public class OnPictureClickListener implements View.OnClickListener {
+  private class OnPictureClickListener implements View.OnClickListener {
 
     private final PictureViewHolder pictureViewHolder;
 
-    public OnPictureClickListener(PictureViewHolder pictureViewHolder) {
+    OnPictureClickListener(PictureViewHolder pictureViewHolder) {
       this.pictureViewHolder = pictureViewHolder;
     }
 

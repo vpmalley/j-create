@@ -15,7 +15,8 @@ import com.jetlag.jcreator.pictures.PictureAdapter;
  */
 public class PictureParagraphAdapter {
 
-  public static final int PICTURE_PARAGRAPH_CELL_RESOURCE = R.layout.picture_paragraph_cell;
+  private static final int PICTURE_PARAGRAPH_CELL_RESOURCE = R.layout.picture_paragraph_cell;
+  private static final int PICTURE_THUMBNAIL_CELL_RESOURCE = R.layout.picture_thumbnail_cell;
 
   private final Activity activity;
 
@@ -33,7 +34,7 @@ public class PictureParagraphAdapter {
   public void onBindViewHolder(PictureParagraphViewHolder holder, DevicePictureParagraph paragraph) {
     RecyclerView picturesView = holder.getPicturesView();
     LinearLayoutManager layoutManager = new LinearLayoutManager(picturesView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-    picturesView.setAdapter(new PictureAdapter(activity, R.layout.picture_thumbnail_cell, paragraph.getDevicePictures(), false));
+    picturesView.setAdapter(new PictureAdapter(activity, PICTURE_THUMBNAIL_CELL_RESOURCE, paragraph.getDevicePictures(), false));
     picturesView.setLayoutManager(layoutManager);
   }
 
