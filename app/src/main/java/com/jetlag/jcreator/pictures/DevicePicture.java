@@ -15,7 +15,7 @@ public class DevicePicture implements Picture, Parcelable {
   private double longitude;
   private String description;
   private boolean picked;
-  private State uploadState;
+  private State uploadState = State.LOCAL;
 
   public DevicePicture() {}
 

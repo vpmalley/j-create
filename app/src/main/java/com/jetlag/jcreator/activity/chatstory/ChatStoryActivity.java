@@ -22,6 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.jetlag.jcreator.R;
+import com.jetlag.jcreator.flickr.FlickrOAuthAuthoriser;
 import com.jetlag.jcreator.flickr.FlickrPictureInfoReceiver;
 import com.jetlag.jcreator.flickr.FlickrPictureInfoService;
 import com.jetlag.jcreator.flickr.FlickrUploadService;
@@ -31,6 +32,8 @@ import com.jetlag.jcreator.paragraph.ParagraphAdapter;
 import com.jetlag.jcreator.permission.PermissionChecker;
 import com.jetlag.jcreator.pictures.DevicePicture;
 import com.jetlag.jcreator.pictures.PictureAdapter;
+
+import org.scribe.model.Token;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,6 +89,11 @@ public class ChatStoryActivity extends AppCompatActivity implements ChatStoryDis
     int id = item.getItemId();
 
     if (id == R.id.action_publish) {
+      new FlickrOAuthAuthoriser(new FlickrOAuthAuthoriser.PostExecution() {
+        @Override
+        public void onPostExecute(Token accessToken) {
+        }
+      }).launchAuthorizationFlow(this);
       chatStoryPresenter.uploadPictures();
       return true;
     }

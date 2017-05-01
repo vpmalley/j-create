@@ -8,7 +8,7 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/pictures_paragraph"
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
         android:background="@color/background_light"
         android:paddingBottom="10dp"
